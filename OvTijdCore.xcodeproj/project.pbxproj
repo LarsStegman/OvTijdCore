@@ -10,6 +10,11 @@
 		48B79F671D2FF4C400E6365A /* OvTijdCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 48B79F661D2FF4C400E6365A /* OvTijdCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48B79F6E1D2FF4C400E6365A /* OvTijdCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B79F631D2FF4C400E6365A /* OvTijdCore.framework */; };
 		48B79F731D2FF4C400E6365A /* OvTijdCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */; };
+		48B79F9D1D2FF61C00E6365A /* TimingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79F9C1D2FF61C00E6365A /* TimingPoint.swift */; };
+		48B79FA71D30283500E6365A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FA61D30283500E6365A /* Request.swift */; };
+		48B79FA91D3042A400E6365A /* TimingPointGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FA81D3042A400E6365A /* TimingPointGenerator.swift */; };
+		48B79FAB1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FAA1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift */; };
+		48B79FAD1D30481D00E6365A /* SpecificTimingPointGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FAC1D30481D00E6365A /* SpecificTimingPointGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +34,11 @@
 		48B79F6D1D2FF4C400E6365A /* OvTijdCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OvTijdCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvTijdCoreTests.swift; sourceTree = "<group>"; };
 		48B79F741D2FF4C400E6365A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48B79F9C1D2FF61C00E6365A /* TimingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPoint.swift; sourceTree = "<group>"; };
+		48B79FA61D30283500E6365A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		48B79FA81D3042A400E6365A /* TimingPointGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPointGenerator.swift; sourceTree = "<group>"; };
+		48B79FAA1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBasedTimingPointGenerator.swift; sourceTree = "<group>"; };
+		48B79FAC1D30481D00E6365A /* SpecificTimingPointGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecificTimingPointGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +83,11 @@
 			children = (
 				48B79F661D2FF4C400E6365A /* OvTijdCore.h */,
 				48B79F681D2FF4C400E6365A /* Info.plist */,
+				48B79F9C1D2FF61C00E6365A /* TimingPoint.swift */,
+				48B79FA61D30283500E6365A /* Request.swift */,
+				48B79FA81D3042A400E6365A /* TimingPointGenerator.swift */,
+				48B79FAA1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift */,
+				48B79FAC1D30481D00E6365A /* SpecificTimingPointGenerator.swift */,
 			);
 			path = OvTijdCore;
 			sourceTree = "<group>";
@@ -196,6 +211,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48B79FA91D3042A400E6365A /* TimingPointGenerator.swift in Sources */,
+				48B79FAB1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift in Sources */,
+				48B79F9D1D2FF61C00E6365A /* TimingPoint.swift in Sources */,
+				48B79FA71D30283500E6365A /* Request.swift in Sources */,
+				48B79FAD1D30481D00E6365A /* SpecificTimingPointGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +332,7 @@
 		48B79F781D2FF4C400E6365A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -322,12 +343,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = nl.stegman.OvTijdCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		48B79F791D2FF4C400E6365A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -380,6 +403,7 @@
 				48B79F791D2FF4C400E6365A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		48B79F7A1D2FF4C400E6365A /* Build configuration list for PBXNativeTarget "OvTijdCoreTests" */ = {
 			isa = XCConfigurationList;
@@ -388,6 +412,7 @@
 				48B79F7C1D2FF4C400E6365A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
