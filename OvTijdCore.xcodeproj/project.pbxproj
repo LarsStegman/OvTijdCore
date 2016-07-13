@@ -15,7 +15,7 @@
 		48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC351D36490200E75A4F /* TimingPoint.swift */; };
 		48D1DC381D364A0900E75A4F /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC371D364A0900E75A4F /* Pass.swift */; };
 		48D1DC3A1D364ADC00E75A4F /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC391D364ADC00E75A4F /* Transport.swift */; };
-		48D1DC3C1D364BD200E75A4F /* StopGatherer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3B1D364BD200E75A4F /* StopGatherer.swift */; };
+		48D1DC3C1D364BD200E75A4F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3B1D364BD200E75A4F /* Request.swift */; };
 		48D1DC3E1D364C2B00E75A4F /* APIPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */; };
 		48D1DC401D36528200E75A4F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
@@ -42,7 +42,7 @@
 		48D1DC351D36490200E75A4F /* TimingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPoint.swift; sourceTree = "<group>"; };
 		48D1DC371D364A0900E75A4F /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
 		48D1DC391D364ADC00E75A4F /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
-		48D1DC3B1D364BD200E75A4F /* StopGatherer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopGatherer.swift; sourceTree = "<group>"; };
+		48D1DC3B1D364BD200E75A4F /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIPaths.swift; sourceTree = "<group>"; };
 		48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/OvTijdWorkspace-filnlyslhioimpeybfcwhomrdtui/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,7 +96,7 @@
 				48D1DC351D36490200E75A4F /* TimingPoint.swift */,
 				48D1DC371D364A0900E75A4F /* Pass.swift */,
 				48D1DC391D364ADC00E75A4F /* Transport.swift */,
-				48D1DC3B1D364BD200E75A4F /* StopGatherer.swift */,
+				48D1DC3B1D364BD200E75A4F /* Request.swift */,
 				48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */,
 			);
 			path = OvTijdCore;
@@ -224,7 +224,7 @@
 				48D1DC381D364A0900E75A4F /* Pass.swift in Sources */,
 				48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */,
 				48D1DC3A1D364ADC00E75A4F /* Transport.swift in Sources */,
-				48D1DC3C1D364BD200E75A4F /* StopGatherer.swift in Sources */,
+				48D1DC3C1D364BD200E75A4F /* Request.swift in Sources */,
 				48D1DC321D36425300E75A4F /* StopArea.swift in Sources */,
 				48D1DC341D36432200E75A4F /* Stop.swift in Sources */,
 				48D1DC3E1D364C2B00E75A4F /* APIPaths.swift in Sources */,

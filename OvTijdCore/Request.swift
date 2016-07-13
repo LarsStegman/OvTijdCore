@@ -1,5 +1,5 @@
 //
-//  StopGatherer.swift
+//  Request.swift
 //  OvTijdCore
 //
 //  Created by Lars Stegman on 13-07-16.
@@ -10,12 +10,31 @@ import Foundation
 import CoreLocation
 import SwiftyJSON
 
-public class StopGatherer {
+/**
+ Request retrieves data from an API.
+ */
+public class Request {
 
+    private let apiLocation: String
+    private let kv78Location: String
+
+    init(apiLocation: String = APIPaths.Root.API, kv78APILocation kv78Location: String = APIPaths.Root.KV78Turbo) {
+        self.apiLocation = "https://\(apiLocation)"
+        self.kv78Location = kv78Location
+    }
+
+    /**
+     Retrieves the StopAreas near the provided location.
+ 
+     - Important: This method is not executed on the main queue.
+
+     - Parameter location The location
+     - Parameter handler The found StopAreas will be provided via a callback.
+     */
     public func getStopAreasNear(location: CLLocationCoordinate2D, handler callback: ([StopArea]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) { [unowned self] in
-            let apiLocation = "https://\(APIPaths.Root.API)/\(APIPaths.Stops)/\(APIPaths.StopsEndpoint)\(APIPaths.Near)"
-            let request = "\(apiLocation)\(location.latitude),\(location.longitude)&limit=\(APIPaths.maxNumberOfStopAreas)"
+            let api = "\(self.apiLocation)/\(APIPaths.Stops)/\(APIPaths.StopsEndpoint)\(APIPaths.Near)"
+            let request = "\(api)\(location.latitude),\(location.longitude)&limit=\(APIPaths.maxNumberOfStopAreas)"
             let url = NSURL(string: request)!
 
             let dataFromNetwork = NSData(contentsOfURL: url)
@@ -27,6 +46,9 @@ public class StopGatherer {
         }
     }
 
+    /**
+     Generates StopAreas from the specified JSON Object
+     */
     private func generateStopAreas(from stopAreas: JSON) -> [StopArea] {
         var results = [StopArea]()
 
@@ -47,11 +69,11 @@ public class StopGatherer {
      
      The given data should be of format
 
-         {"Columns": [...], "Rows": [...]}
+     `{"Columns": [...], "Rows": [...]}`
      
      The returned data will be of format
 
-         [{key0: value0, key1: value1}, {key0: value0, key1: value1}, ...]
+     `[{key0: value0, key1: value1}, {key0: value0, key1: value1}, ...]`
 
      - Returns The rewritten data.
      */
