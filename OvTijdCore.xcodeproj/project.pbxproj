@@ -10,11 +10,14 @@
 		48B79F671D2FF4C400E6365A /* OvTijdCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 48B79F661D2FF4C400E6365A /* OvTijdCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48B79F6E1D2FF4C400E6365A /* OvTijdCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B79F631D2FF4C400E6365A /* OvTijdCore.framework */; };
 		48B79F731D2FF4C400E6365A /* OvTijdCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */; };
-		48B79F9D1D2FF61C00E6365A /* TimingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79F9C1D2FF61C00E6365A /* TimingPoint.swift */; };
-		48B79FA71D30283500E6365A /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FA61D30283500E6365A /* Request.swift */; };
-		48B79FA91D3042A400E6365A /* TimingPointGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FA81D3042A400E6365A /* TimingPointGenerator.swift */; };
-		48B79FAB1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FAA1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift */; };
-		48B79FAD1D30481D00E6365A /* SpecificTimingPointGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79FAC1D30481D00E6365A /* SpecificTimingPointGenerator.swift */; };
+		48D1DC321D36425300E75A4F /* StopArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC311D36425300E75A4F /* StopArea.swift */; };
+		48D1DC341D36432200E75A4F /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC331D36432200E75A4F /* Stop.swift */; };
+		48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC351D36490200E75A4F /* TimingPoint.swift */; };
+		48D1DC381D364A0900E75A4F /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC371D364A0900E75A4F /* Pass.swift */; };
+		48D1DC3A1D364ADC00E75A4F /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC391D364ADC00E75A4F /* Transport.swift */; };
+		48D1DC3C1D364BD200E75A4F /* StopGatherer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3B1D364BD200E75A4F /* StopGatherer.swift */; };
+		48D1DC3E1D364C2B00E75A4F /* APIPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */; };
+		48D1DC401D36528200E75A4F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,11 +37,14 @@
 		48B79F6D1D2FF4C400E6365A /* OvTijdCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OvTijdCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvTijdCoreTests.swift; sourceTree = "<group>"; };
 		48B79F741D2FF4C400E6365A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		48B79F9C1D2FF61C00E6365A /* TimingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPoint.swift; sourceTree = "<group>"; };
-		48B79FA61D30283500E6365A /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		48B79FA81D3042A400E6365A /* TimingPointGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPointGenerator.swift; sourceTree = "<group>"; };
-		48B79FAA1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBasedTimingPointGenerator.swift; sourceTree = "<group>"; };
-		48B79FAC1D30481D00E6365A /* SpecificTimingPointGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecificTimingPointGenerator.swift; sourceTree = "<group>"; };
+		48D1DC311D36425300E75A4F /* StopArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopArea.swift; sourceTree = "<group>"; };
+		48D1DC331D36432200E75A4F /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		48D1DC351D36490200E75A4F /* TimingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPoint.swift; sourceTree = "<group>"; };
+		48D1DC371D364A0900E75A4F /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
+		48D1DC391D364ADC00E75A4F /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
+		48D1DC3B1D364BD200E75A4F /* StopGatherer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopGatherer.swift; sourceTree = "<group>"; };
+		48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIPaths.swift; sourceTree = "<group>"; };
+		48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/OvTijdWorkspace-filnlyslhioimpeybfcwhomrdtui/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48D1DC401D36528200E75A4F /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +70,7 @@
 		48B79F591D2FF4C400E6365A = {
 			isa = PBXGroup;
 			children = (
+				48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */,
 				48B79F651D2FF4C400E6365A /* OvTijdCore */,
 				48B79F711D2FF4C400E6365A /* OvTijdCoreTests */,
 				48B79F641D2FF4C400E6365A /* Products */,
@@ -83,11 +91,13 @@
 			children = (
 				48B79F661D2FF4C400E6365A /* OvTijdCore.h */,
 				48B79F681D2FF4C400E6365A /* Info.plist */,
-				48B79F9C1D2FF61C00E6365A /* TimingPoint.swift */,
-				48B79FA61D30283500E6365A /* Request.swift */,
-				48B79FA81D3042A400E6365A /* TimingPointGenerator.swift */,
-				48B79FAA1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift */,
-				48B79FAC1D30481D00E6365A /* SpecificTimingPointGenerator.swift */,
+				48D1DC311D36425300E75A4F /* StopArea.swift */,
+				48D1DC331D36432200E75A4F /* Stop.swift */,
+				48D1DC351D36490200E75A4F /* TimingPoint.swift */,
+				48D1DC371D364A0900E75A4F /* Pass.swift */,
+				48D1DC391D364ADC00E75A4F /* Transport.swift */,
+				48D1DC3B1D364BD200E75A4F /* StopGatherer.swift */,
+				48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */,
 			);
 			path = OvTijdCore;
 			sourceTree = "<group>";
@@ -211,11 +221,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48B79FA91D3042A400E6365A /* TimingPointGenerator.swift in Sources */,
-				48B79FAB1D3047EC00E6365A /* LocationBasedTimingPointGenerator.swift in Sources */,
-				48B79F9D1D2FF61C00E6365A /* TimingPoint.swift in Sources */,
-				48B79FA71D30283500E6365A /* Request.swift in Sources */,
-				48B79FAD1D30481D00E6365A /* SpecificTimingPointGenerator.swift in Sources */,
+				48D1DC381D364A0900E75A4F /* Pass.swift in Sources */,
+				48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */,
+				48D1DC3A1D364ADC00E75A4F /* Transport.swift in Sources */,
+				48D1DC3C1D364BD200E75A4F /* StopGatherer.swift in Sources */,
+				48D1DC321D36425300E75A4F /* StopArea.swift in Sources */,
+				48D1DC341D36432200E75A4F /* Stop.swift in Sources */,
+				48D1DC3E1D364C2B00E75A4F /* APIPaths.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
