@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48A8915A1D36AF4F0010A609 /* OvTijdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A891591D36AF4F0010A609 /* OvTijdManager.swift */; };
 		48B79F671D2FF4C400E6365A /* OvTijdCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 48B79F661D2FF4C400E6365A /* OvTijdCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48B79F6E1D2FF4C400E6365A /* OvTijdCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B79F631D2FF4C400E6365A /* OvTijdCore.framework */; };
 		48B79F731D2FF4C400E6365A /* OvTijdCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		48A891591D36AF4F0010A609 /* OvTijdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OvTijdManager.swift; sourceTree = "<group>"; };
 		48B79F631D2FF4C400E6365A /* OvTijdCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OvTijdCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B79F661D2FF4C400E6365A /* OvTijdCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OvTijdCore.h; sourceTree = "<group>"; };
 		48B79F681D2FF4C400E6365A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				48D1DC391D364ADC00E75A4F /* Transport.swift */,
 				48D1DC3B1D364BD200E75A4F /* Request.swift */,
 				48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */,
+				48A891591D36AF4F0010A609 /* OvTijdManager.swift */,
 			);
 			path = OvTijdCore;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48D1DC381D364A0900E75A4F /* Pass.swift in Sources */,
+				48A8915A1D36AF4F0010A609 /* OvTijdManager.swift in Sources */,
 				48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */,
 				48D1DC3A1D364ADC00E75A4F /* Transport.swift in Sources */,
 				48D1DC3C1D364BD200E75A4F /* Request.swift in Sources */,
