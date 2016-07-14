@@ -18,8 +18,8 @@ public class Request {
     private let apiLocation: String
     private let kv78Location: String
 
-    init(apiLocation: String = APIPaths.Root.API, kv78APILocation kv78Location: String = APIPaths.Root.KV78Turbo) {
-        self.apiLocation = "https://\(apiLocation)"
+    init(apiLocation: String, kv78APILocation kv78Location: String) {
+        self.apiLocation = apiLocation
         self.kv78Location = kv78Location
     }
 
@@ -31,8 +31,8 @@ public class Request {
      - Parameter location The location
      - Parameter handler The found StopAreas will be provided via a callback.
      */
-    public func getStopAreasNear(location: CLLocationCoordinate2D, handler callback: ([StopArea]) -> Void) {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) { [unowned self] in
+    public func stopAreasNear(location: CLLocationCoordinate2D, handler callback: ([StopArea]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             let api = "\(self.apiLocation)/\(APIPaths.Stops)/\(APIPaths.StopsEndpoint)\(APIPaths.Near)"
             let request = "\(api)\(location.latitude),\(location.longitude)&limit=\(APIPaths.maxNumberOfStopAreas)"
             let url = NSURL(string: request)!

@@ -16,6 +16,6 @@ struct APIPaths {
 
     static let Stops = "haltes"
     static let StopsEndpoint = "stops"
-    static let Near = "near?="
+    static let Near = "?near="
     static let maxNumberOfStopAreas = 50
 }
