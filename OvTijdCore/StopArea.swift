@@ -12,9 +12,13 @@ import CoreLocation
 public struct StopArea {
     let code: String?
 
-    let town: String
-    let name: String
-    let location: CLLocationCoordinate2D
+    public let town: String
+    public let name: String
+    public let location: CLLocation
 
     let stops = [Stop]()
+
+    func timingPointsInStopArea() -> [Stop] {
+        return [Stop]()
+    }
 }

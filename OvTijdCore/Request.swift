@@ -31,10 +31,10 @@ public class Request {
      - Parameter location The location
      - Parameter handler The found StopAreas will be provided via a callback.
      */
-    public func stopAreasNear(location: CLLocationCoordinate2D, handler callback: ([StopArea]) -> Void) {
+    public func stopAreas(near: CLLocation, handler callback: ([StopArea]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             let api = "\(self.apiLocation)/\(APIPaths.Stops)/\(APIPaths.StopsEndpoint)\(APIPaths.Near)"
-            let request = "\(api)\(location.latitude),\(location.longitude)&limit=\(APIPaths.maxNumberOfStopAreas)"
+            let request = "\(api)\(near.coordinate.latitude),\(near.coordinate.longitude)&limit=\(APIPaths.maxNumberOfStopAreas)"
             let url = NSURL(string: request)!
 
             let dataFromNetwork = NSData(contentsOfURL: url)
@@ -55,7 +55,7 @@ public class Request {
         for stopArea in stopAreas.arrayValue {
             let town = stopArea["TimingPointTown"].stringValue
             let name = stopArea["Name"].stringValue
-            let location = CLLocationCoordinate2D(latitude: stopArea["Latitude"].doubleValue,
+            let location = CLLocation(latitude: stopArea["Latitude"].doubleValue,
                                                   longitude: stopArea["Longitude"].doubleValue)
             let code = stopArea["StopAreaCode"].string
             results.append(StopArea(code: code, town: town, name: name, location: location))
