@@ -14,8 +14,18 @@ struct APIPaths {
         static let KV78Turbo = "kv78turbo.ovapi.nl"
     }
 
-    static let Stops = "haltes"
-    static let StopsEndpoint = "stops"
-    static let Near = "?near="
+    struct TimingPoint {
+        static let Endpoint = "timingpoints"
+        static let TownOption = "town"
+        static let NameOption = "name"
+    }
+
+    struct Stops {
+        static let Stops = "haltes"
+        static let Endpoint = "stops"
+        static let NearOption = "near"
+    }
+
+
     static let maxNumberOfStopAreas = 50
 }

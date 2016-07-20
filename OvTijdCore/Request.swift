@@ -33,15 +33,23 @@ public class Request {
      */
     public func stopAreas(near: CLLocation, handler callback: ([StopArea]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            let api = "\(self.apiLocation)/\(APIPaths.Stops)/\(APIPaths.StopsEndpoint)\(APIPaths.Near)"
-            let request = "\(api)\(near.coordinate.latitude),\(near.coordinate.longitude)&limit=\(APIPaths.maxNumberOfStopAreas)"
+            let request = self.generateURL(base: self.apiLocation,
+                                       endpoint: "\(APIPaths.Stops.Stops)/\(APIPaths.Stops.Endpoint)",
+                                       options: [APIPaths.Stops.NearOption: "\(near.coordinate.latitude),\(near.coordinate.longitude)", "limit": "\(APIPaths.maxNumberOfStopAreas)"])
+
             let url = NSURL(string: request)!
 
             let dataFromNetwork = NSData(contentsOfURL: url)
             if let dataFromApi = dataFromNetwork {
                 let results = JSON(data: dataFromApi)
                 let queryResults = self.rewriteOvApi(from: results)
-                callback(self.generateStopAreas(from: queryResults))
+                var stopAreas = self.generateStopAreas(from: queryResults)
+
+                for i in 0..<stopAreas.count {
+                    stopAreas[i] = self.includeTimingpoints(inStopArea: stopAreas[i])
+                }
+
+                callback(stopAreas)
             }
         }
     }
@@ -56,12 +64,35 @@ public class Request {
             let town = stopArea["TimingPointTown"].stringValue
             let name = stopArea["Name"].stringValue
             let location = CLLocation(latitude: stopArea["Latitude"].doubleValue,
-                                                  longitude: stopArea["Longitude"].doubleValue)
+                                      longitude: stopArea["Longitude"].doubleValue)
             let code = stopArea["StopAreaCode"].string
-            results.append(StopArea(code: code, town: town, name: name, location: location))
+            results.append(StopArea(code: code, name: name, town: town, location: location))
         }
 
         return results
+    }
+
+    private func includeTimingpoints(inStopArea stopArea: StopArea) -> StopArea {
+        let request = generateURL(base: self.apiLocation,
+                                  endpoint: "\(APIPaths.Stops.Stops)/\(APIPaths.TimingPoint.Endpoint)",
+                                  options: [APIPaths.TimingPoint.TownOption: stopArea.town, APIPaths.TimingPoint.NameOption: stopArea.name])
+        let url = NSURL(string: request)
+        let dataFromNetwork = NSData(contentsOfURL: url!)
+        if let dataFromApi = dataFromNetwork {
+            let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
+            let stopAreaCode = queryResults.array?.first?["StopAreaCode"].stringValue
+            var resultingStopArea = StopArea(code: stopArea.code ?? stopAreaCode, name: stopArea.name, town: stopArea.town, location: stopArea.location)
+
+            for timingPoint in queryResults.arrayValue {
+                let town = timingPoint["TimingPointTown"].stringValue
+                let name = timingPoint["TimingPointName"].stringValue
+                let code = timingPoint["TimingPointCode"].intValue
+                resultingStopArea.addTimingPoint(TimingPoint(timingPointCode: code, timingPointName: name, timingPointTown: town))
+            }
+
+            return resultingStopArea
+        }
+        return stopArea
     }
 
     /**
@@ -93,6 +124,17 @@ public class Request {
         }
 
         return JSON(results)
+    }
+
+    private func generateURL(base base: String, endpoint: String, options: [String: String]) -> String {
+        var url = "\(base)/\(endpoint)"
+        if options.count > 0 {
+            url += "?"
+        }
+        for (key, value) in options {
+            url += "\(key)=\(value)&"
+        }
+        return url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
     }
 
 }

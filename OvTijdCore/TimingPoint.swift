@@ -8,7 +8,8 @@
 
 import Foundation
 
-public protocol TimingPoint {
-    var timingPointCode: Int { get }
-    var timingPointName: String { get }
+public struct TimingPoint {
+    let timingPointCode: Int
+    let timingPointName: String
+    let timingPointTown: String
 }

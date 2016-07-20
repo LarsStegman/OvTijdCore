@@ -12,13 +12,20 @@ import CoreLocation
 public struct StopArea {
     let code: String?
 
-    public let town: String
     public let name: String
+    public let town: String
     public let location: CLLocation
 
-    let stops = [Stop]()
+    public var stops = [TimingPoint]()
 
-    func timingPointsInStopArea() -> [Stop] {
-        return [Stop]()
+    init(code: String?, name: String, town: String, location: CLLocation) {
+        self.code = code
+        self.name = name
+        self.town = town
+        self.location = location
+    }
+
+    mutating func addTimingPoint(timingPoint: TimingPoint) {
+        stops.append(timingPoint)
     }
 }

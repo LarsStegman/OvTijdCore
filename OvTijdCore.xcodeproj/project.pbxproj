@@ -13,6 +13,7 @@
 		48B79F671D2FF4C400E6365A /* OvTijdCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 48B79F661D2FF4C400E6365A /* OvTijdCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48B79F6E1D2FF4C400E6365A /* OvTijdCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B79F631D2FF4C400E6365A /* OvTijdCore.framework */; };
 		48B79F731D2FF4C400E6365A /* OvTijdCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */; };
+		48CA615D1D3F9143007B6400 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48CA615C1D3F9143007B6400 /* SwiftyJSON.framework */; };
 		48D1DC321D36425300E75A4F /* StopArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC311D36425300E75A4F /* StopArea.swift */; };
 		48D1DC341D36432200E75A4F /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC331D36432200E75A4F /* Stop.swift */; };
 		48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC351D36490200E75A4F /* TimingPoint.swift */; };
@@ -20,7 +21,6 @@
 		48D1DC3A1D364ADC00E75A4F /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC391D364ADC00E75A4F /* Transport.swift */; };
 		48D1DC3C1D364BD200E75A4F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3B1D364BD200E75A4F /* Request.swift */; };
 		48D1DC3E1D364C2B00E75A4F /* APIPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */; };
-		48D1DC401D36528200E75A4F /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +43,7 @@
 		48B79F6D1D2FF4C400E6365A /* OvTijdCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OvTijdCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvTijdCoreTests.swift; sourceTree = "<group>"; };
 		48B79F741D2FF4C400E6365A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48CA615C1D3F9143007B6400 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Library/Developer/Xcode/DerivedData/OvTijdWorkspace-bsjylqmhdwtsyjfrdstfbpqdmthq/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		48D1DC311D36425300E75A4F /* StopArea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopArea.swift; sourceTree = "<group>"; };
 		48D1DC331D36432200E75A4F /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		48D1DC351D36490200E75A4F /* TimingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimingPoint.swift; sourceTree = "<group>"; };
@@ -50,7 +51,6 @@
 		48D1DC391D364ADC00E75A4F /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
 		48D1DC3B1D364BD200E75A4F /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIPaths.swift; sourceTree = "<group>"; };
-		48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../Library/Developer/Xcode/DerivedData/OvTijdWorkspace-filnlyslhioimpeybfcwhomrdtui/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48D1DC401D36528200E75A4F /* SwiftyJSON.framework in Frameworks */,
+				48CA615D1D3F9143007B6400 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,9 +76,9 @@
 		48B79F591D2FF4C400E6365A = {
 			isa = PBXGroup;
 			children = (
-				48D1DC3F1D36528200E75A4F /* SwiftyJSON.framework */,
-				48B79F651D2FF4C400E6365A /* OvTijdCore */,
-				48B79F711D2FF4C400E6365A /* OvTijdCoreTests */,
+				48CA615C1D3F9143007B6400 /* SwiftyJSON.framework */,
+				48B79F651D2FF4C400E6365A /* Source */,
+				48B79F711D2FF4C400E6365A /* Tests */,
 				48B79F641D2FF4C400E6365A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,32 +92,50 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		48B79F651D2FF4C400E6365A /* OvTijdCore */ = {
+		48B79F651D2FF4C400E6365A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				48CA61681D3FA1E4007B6400 /* Model */,
+				48CA61671D3FA1D0007B6400 /* Management */,
 				48B79F661D2FF4C400E6365A /* OvTijdCore.h */,
 				48B79F681D2FF4C400E6365A /* Info.plist */,
-				48D1DC311D36425300E75A4F /* StopArea.swift */,
-				48D1DC331D36432200E75A4F /* Stop.swift */,
-				48D1DC351D36490200E75A4F /* TimingPoint.swift */,
-				48D1DC371D364A0900E75A4F /* Pass.swift */,
-				48D1DC391D364ADC00E75A4F /* Transport.swift */,
+			);
+			name = Source;
+			path = OvTijdCore;
+			sourceTree = "<group>";
+		};
+		48B79F711D2FF4C400E6365A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */,
+				48B79F741D2FF4C400E6365A /* Info.plist */,
+			);
+			name = Tests;
+			path = OvTijdCoreTests;
+			sourceTree = "<group>";
+		};
+		48CA61671D3FA1D0007B6400 /* Management */ = {
+			isa = PBXGroup;
+			children = (
 				48D1DC3B1D364BD200E75A4F /* Request.swift */,
 				48D1DC3D1D364C2B00E75A4F /* APIPaths.swift */,
 				48A891591D36AF4F0010A609 /* OVTManager.swift */,
 				48568B971D3E160D005C97CC /* OVTLocationManager.swift */,
 				48568B991D3E32B3005C97CC /* OVTError.swift */,
 			);
-			path = OvTijdCore;
+			name = Management;
 			sourceTree = "<group>";
 		};
-		48B79F711D2FF4C400E6365A /* OvTijdCoreTests */ = {
+		48CA61681D3FA1E4007B6400 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				48B79F721D2FF4C400E6365A /* OvTijdCoreTests.swift */,
-				48B79F741D2FF4C400E6365A /* Info.plist */,
+				48D1DC311D36425300E75A4F /* StopArea.swift */,
+				48D1DC331D36432200E75A4F /* Stop.swift */,
+				48D1DC351D36490200E75A4F /* TimingPoint.swift */,
+				48D1DC371D364A0900E75A4F /* Pass.swift */,
+				48D1DC391D364ADC00E75A4F /* Transport.swift */,
 			);
-			path = OvTijdCoreTests;
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
