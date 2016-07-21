@@ -45,10 +45,6 @@ public class Request {
                 let queryResults = self.rewriteOvApi(from: results)
                 var stopAreas = self.generateStopAreas(from: queryResults)
 
-                for i in 0..<stopAreas.count {
-                    stopAreas[i] = self.includeTimingpoints(inStopArea: stopAreas[i])
-                }
-
                 callback(stopAreas)
             }
         }
