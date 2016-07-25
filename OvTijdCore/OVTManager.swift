@@ -36,9 +36,11 @@ public class OVTManager {
         self.request.timingPoints(inStopArea: stopArea, handler: callback)
     }
 
-    public func stops(inStopArea: StopArea, useIn callback: ([Stop]) -> Void) {
-        self.timingPoints(forStopArea: inStopArea) { [weak self] (timingPoints) in
-
+    public func stops(stopArea: StopArea, useIn callback: ([Stop]) -> Void) {
+        self.timingPoints(forStopArea: stopArea) { [weak self] (timingPoints) in
+            self?.request.stops(forTimingPoints: timingPoints) { (stops) in
+                callback(stops)
+            }
         }
     }
 }
