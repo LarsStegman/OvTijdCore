@@ -1,5 +1,5 @@
 //
-//  Journey.swift
+//  Pass.swift
 //  OvTijdCore
 //
 //  Created by Lars Stegman on 13-07-16.
@@ -9,9 +9,22 @@
 import Foundation
 import CoreLocation
 
-public struct Pass {
+public class Pass {
     public let code: String
     public let transportType: Transport
+    public let timingPoint: TimingPoint
 
-    public let location: CLLocationCoordinate2D
+    public let lineDetails: LineDetails
+    public var planning: PassPlanning
+
+    public var status: TripStopStatus
+
+    init(code: String, transport: Transport, timingPoint: TimingPoint, lineDetails: LineDetails, planning: PassPlanning, status: TripStopStatus) {
+        self.code = code
+        self.transportType = transport
+        self.timingPoint = timingPoint
+        self.lineDetails = lineDetails
+        self.planning = planning
+        self.status = status
+    }
 }

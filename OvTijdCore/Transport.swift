@@ -8,8 +8,10 @@
 
 import Foundation
 
-public enum Transport {
+public enum Transport: String {
     case Bus
     case Tram
     case Metro
+    case Train
+    case Boat
 }

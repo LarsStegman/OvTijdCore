@@ -41,9 +41,8 @@ public class Request {
 
             let dataFromNetwork = NSData(contentsOfURL: url)
             if let dataFromApi = dataFromNetwork {
-                let results = JSON(data: dataFromApi)
-                let queryResults = self.rewriteOvApi(from: results)
-                var stopAreas = self.generateStopAreas(from: queryResults)
+                let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
+                let stopAreas = self.generateStopAreas(from: queryResults)
 
                 callback(stopAreas)
             }
@@ -68,27 +67,127 @@ public class Request {
         return results
     }
 
-    private func includeTimingpoints(inStopArea stopArea: StopArea) -> StopArea {
-        let request = generateURL(base: self.apiLocation,
-                                  endpoint: "\(APIPaths.Stops.Stops)/\(APIPaths.TimingPoint.Endpoint)",
-                                  options: [APIPaths.TimingPoint.TownOption: stopArea.town, APIPaths.TimingPoint.NameOption: stopArea.name])
-        let url = NSURL(string: request)
-        let dataFromNetwork = NSData(contentsOfURL: url!)
-        if let dataFromApi = dataFromNetwork {
-            let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
-            let stopAreaCode = queryResults.array?.first?["StopAreaCode"].stringValue
-            var resultingStopArea = StopArea(code: stopArea.code ?? stopAreaCode, name: stopArea.name, town: stopArea.town, location: stopArea.location)
+    /**
+     Retrieves the timing points for a certain stop area.
+     
+     - Important: This method is not executed on the main queue.
+     
+     - Parameter: inStopArea The stop area for which the timing points have to be retrieved
+     - Parameter: handler The retrieved timing points will be provided via the callback
+     */
+    public func timingPoints(inStopArea stopArea: StopArea, handler callback: ([TimingPoint]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            let request = self.generateURL(base: self.apiLocation,
+                                       endpoint: "\(APIPaths.Stops.Stops)/\(APIPaths.TimingPoint.Endpoint)",
+                                        options: [APIPaths.TimingPoint.TownOption: stopArea.town, APIPaths.TimingPoint.NameOption: stopArea.name])
+            let url = NSURL(string: request)!
+            let dataFromNetwork = NSData(contentsOfURL: url)
+            if let dataFromApi = dataFromNetwork {
+                let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
+                var timingPoints = [TimingPoint]()
+                for timingPoint in queryResults.arrayValue {
+                    timingPoints.append(self.generateTimingPoint(from: timingPoint))
+                }
 
-            for timingPoint in queryResults.arrayValue {
-                let town = timingPoint["TimingPointTown"].stringValue
-                let name = timingPoint["TimingPointName"].stringValue
-                let code = timingPoint["TimingPointCode"].intValue
-                resultingStopArea.addTimingPoint(TimingPoint(timingPointCode: code, timingPointName: name, timingPointTown: town))
+                callback(timingPoints)
+            }
+        }
+    }
+
+    /**
+     Generate timing points from the specified JSON Object.
+     
+     - Parameter: from The JSON from which the timing points are generated.
+     */
+    private func generateTimingPoint(from timingPoint: JSON) -> TimingPoint {
+        let town = timingPoint["TimingPointTown"].stringValue
+        let name = timingPoint["TimingPointName"].stringValue
+        let code = timingPoint["TimingPointCode"].intValue
+        return TimingPoint(timingPointCode: code, timingPointName: name, timingPointTown: town)
+    }
+
+    public func stops(forTimingPoints timingPoints: [TimingPoint], handler callback: ([Stop]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            let timingPointCodes = timingPoints.reduce("") {
+                (str: String, timingPoint: TimingPoint) -> String in
+                return str.stringByAppendingString("\(timingPoint.timingPointCode)").stringByAppendingString(",")
+            }
+            let request = self.generateURL(base: self.kv78Location,
+                                           endpoint: "\(APIPaths.TimingPoint.TimingPointCode)/\(timingPointCodes)",
+                                           options: [String: String]())
+            let url = NSURL(string: request)!
+            let dataFromNetwork = NSData(contentsOfURL: url)
+            if let dataFromApi = dataFromNetwork {
+                let queryResults = JSON(data: dataFromApi)
+                let stops = self.generateStops(from: queryResults)
+
+                callback(stops)
+            }
+        }
+    }
+
+    private func generateStops(from stops: JSON) -> [Stop] {
+        var stopsResult = [Stop]()
+        if let stopsDict = stops.dictionary {
+            for (_, details) in stopsDict {
+                let stop = generateStop(from: details["Stop"])
+                let passes = details["Passes"]
+                for (passtimeCode, pass) in passes.dictionaryValue {
+                    stop.add(generatePass(passtimeCode, pass: pass))
+                }
+
+                stopsResult.append(stop)
             }
 
-            return resultingStopArea
+            return stopsResult
         }
-        return stopArea
+
+        return [Stop]()
+    }
+
+    private func generateStop(from stop: JSON) -> Stop {
+        let stopDict = stop.dictionaryValue
+        let location = CLLocation(latitude: stopDict["Latitude"]!.doubleValue,
+                                  longitude: stopDict["Longitude"]!.doubleValue)
+        let timingPoint = generateTimingPoint(from: stop)
+        return Stop(timingPoint: timingPoint, location: location)
+    }
+
+    private func generatePass(passtimeCode: String, pass: JSON) -> Pass {
+        let passDict = pass.dictionaryValue
+        let transport = Transport(rawValue: passDict["TransportType"]!.stringValue.lowercaseString.capitalizedString)!
+        let timingPoint = generateTimingPoint(from: pass)
+        let lineDetails = generateLineDetails(from: pass)
+        let passPlanning = generatePassPlanning(from: pass)
+        let status = TripStopStatus(rawValue: passDict["TripStopStatus"]!.stringValue.lowercaseString.capitalizedString)!
+        return Pass(code: passtimeCode,
+                    transport: transport,
+                    timingPoint: timingPoint,
+                    lineDetails: lineDetails,
+                    planning: passPlanning,
+                    status: status)
+    }
+
+    private func generateLineDetails(from lineDetails: JSON) -> LineDetails {
+        let lineDetailsDict = lineDetails.dictionaryValue
+        let name = lineDetailsDict["DestinationName50"]!.stringValue
+        let lineName = lineDetailsDict["LineName"]!.stringValue
+        let publicNumber = lineDetailsDict["LinePublicNumber"]!.stringValue
+        return LineDetails(destinationName: name, lineName: lineName, publicNumber: publicNumber)
+    }
+
+    private func generatePassPlanning(from planning: JSON) -> PassPlanning {
+        let planningDict = planning.dictionaryValue
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        
+        let tat = dateFormatter.dateFromString(planningDict["TargetArrivalTime"]!.stringValue)!
+        let eat = dateFormatter.dateFromString(planningDict["ExpectedArrivalTime"]!.stringValue)!
+        let tdt = dateFormatter.dateFromString(planningDict["TargetDepartureTime"]!.stringValue)!
+        let edt = dateFormatter.dateFromString(planningDict["ExpectedDepartureTime"]!.stringValue)!
+
+        return PassPlanning(targetArrivalTime: tat, targetDepartureTime: tdt, expectedArrivalTime: eat, expectedDeparture: edt)
     }
 
     /**
@@ -130,7 +229,7 @@ public class Request {
         for (key, value) in options {
             url += "\(key)=\(value)&"
         }
-        return url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet())!
     }
 
 }

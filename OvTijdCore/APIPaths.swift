@@ -18,6 +18,7 @@ struct APIPaths {
         static let Endpoint = "timingpoints"
         static let TownOption = "town"
         static let NameOption = "name"
+        static let TimingPointCode = "tpc"
     }
 
     struct Stops {
