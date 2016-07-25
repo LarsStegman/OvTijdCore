@@ -14,7 +14,7 @@ public class OVTManager {
     public static let sharedInstance = OVTManager()
     private init() {}
 
-    let request = Request(apiLocation: "https://\(APIPaths.Root.API)", kv78APILocation: APIPaths.Root.KV78Turbo)
+    let request = Request(apiLocation: "https://\(APIPaths.Root.API)", kv78APILocation: "http://\(APIPaths.Root.KV78Turbo)")
 
     /**
      Provides the nearest stop area

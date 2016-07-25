@@ -13,7 +13,7 @@ public class Stop {
     public let timingPoint: TimingPoint
     public let location: CLLocation
 
-    var passes = [Pass]()
+    public var passes = [Pass]()
 
     public func add(pass: Pass) {
         passes.append(pass)

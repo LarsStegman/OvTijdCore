@@ -115,6 +115,7 @@ public class Request {
             let request = self.generateURL(base: self.kv78Location,
                                            endpoint: "\(APIPaths.TimingPoint.TimingPointCode)/\(timingPointCodes)",
                                            options: [String: String]())
+
             let url = NSURL(string: request)!
             let dataFromNetwork = NSData(contentsOfURL: url)
             if let dataFromApi = dataFromNetwork {
@@ -229,7 +230,7 @@ public class Request {
         for (key, value) in options {
             url += "\(key)=\(value)&"
         }
-        return url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet())!
+        return url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
     }
 
 }

@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public struct StopArea {
+public struct StopArea: Equatable {
     let code: String?
 
     public let name: String
@@ -28,4 +28,8 @@ public struct StopArea {
     mutating func addTimingPoint(timingPoint: TimingPoint) {
         stops.append(timingPoint)
     }
+}
+
+public func ==(lhs: StopArea, rhs: StopArea) -> Bool {
+    return lhs.name == rhs.name && lhs.town == rhs.town
 }

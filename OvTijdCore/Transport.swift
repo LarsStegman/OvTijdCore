@@ -14,4 +14,10 @@ public enum Transport: String {
     case Metro
     case Train
     case Boat
+
+    public func generateIcon(forId id: String) -> UIImage {
+        let image = UIImage()
+
+        return image
+    }
 }
