@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public class Stop {
+public class Stop: NSObject {
     public let timingPoint: TimingPoint
     public let location: CLLocation
 

@@ -181,8 +181,8 @@ public class Request {
         let planningDict = planning.dictionaryValue
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        
+        dateFormatter.timeZone = NSTimeZone(name: "Europe/Amsterdam")
+
         let tat = dateFormatter.dateFromString(planningDict["TargetArrivalTime"]!.stringValue)!
         let eat = dateFormatter.dateFromString(planningDict["ExpectedArrivalTime"]!.stringValue)!
         let tdt = dateFormatter.dateFromString(planningDict["TargetDepartureTime"]!.stringValue)!

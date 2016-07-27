@@ -9,7 +9,7 @@
 import Foundation
 
 public struct TimingPoint {
-    let timingPointCode: Int
-    let timingPointName: String
-    let timingPointTown: String
+    public let timingPointCode: Int
+    public let timingPointName: String
+    public let timingPointTown: String
 }

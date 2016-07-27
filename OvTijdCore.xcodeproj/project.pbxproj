@@ -10,7 +10,7 @@
 		48252B2F1D42B83A009D64B2 /* LineDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48252B2E1D42B83A009D64B2 /* LineDetails.swift */; };
 		48252B311D42B8A2009D64B2 /* PassPlanning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48252B301D42B8A2009D64B2 /* PassPlanning.swift */; };
 		48252B331D4651EF009D64B2 /* TripStopStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48252B321D4651EF009D64B2 /* TripStopStatus.swift */; };
-		48252B351D47FA52009D64B2 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48252B341D47FA52009D64B2 /* icons.xcassets */; };
+		48252B351D47FA52009D64B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48252B341D47FA52009D64B2 /* Assets.xcassets */; };
 		48568B981D3E160D005C97CC /* OVTLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48568B971D3E160D005C97CC /* OVTLocationManager.swift */; };
 		48568B9A1D3E32B3005C97CC /* OVTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48568B991D3E32B3005C97CC /* OVTError.swift */; };
 		48A8915A1D36AF4F0010A609 /* OVTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A891591D36AF4F0010A609 /* OVTManager.swift */; };
@@ -41,7 +41,7 @@
 		48252B2E1D42B83A009D64B2 /* LineDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDetails.swift; sourceTree = "<group>"; };
 		48252B301D42B8A2009D64B2 /* PassPlanning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassPlanning.swift; sourceTree = "<group>"; };
 		48252B321D4651EF009D64B2 /* TripStopStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripStopStatus.swift; sourceTree = "<group>"; };
-		48252B341D47FA52009D64B2 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
+		48252B341D47FA52009D64B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48568B971D3E160D005C97CC /* OVTLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTLocationManager.swift; sourceTree = "<group>"; };
 		48568B991D3E32B3005C97CC /* OVTError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTError.swift; sourceTree = "<group>"; };
 		48A891591D36AF4F0010A609 /* OVTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTManager.swift; sourceTree = "<group>"; };
@@ -103,11 +103,11 @@
 		48B79F651D2FF4C400E6365A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				48252B341D47FA52009D64B2 /* Assets.xcassets */,
 				48CA61681D3FA1E4007B6400 /* Model */,
 				48CA61671D3FA1D0007B6400 /* Management */,
 				48B79F661D2FF4C400E6365A /* OvTijdCore.h */,
 				48B79F681D2FF4C400E6365A /* Info.plist */,
-				48252B341D47FA52009D64B2 /* icons.xcassets */,
 			);
 			name = Source;
 			path = OvTijdCore;
@@ -243,7 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48252B351D47FA52009D64B2 /* icons.xcassets in Resources */,
+				48252B351D47FA52009D64B2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

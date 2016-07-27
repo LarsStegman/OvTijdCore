@@ -15,9 +15,14 @@ public enum Transport: String {
     case Train
     case Boat
 
-    public func generateIcon(forId id: String) -> UIImage {
-        let image = UIImage()
+    public func generateIcon(forId id: String) -> UIImage? {
+        guard id != "" else {
+            return nil
+        }
+        let imageName = self.rawValue.lowercaseString
+        let image = UIImage(named: imageName, inBundle: NSBundle(identifier: "nl.stegman.OvTijdCore"), compatibleWithTraitCollection: nil)
 
         return image
     }
+
 }
