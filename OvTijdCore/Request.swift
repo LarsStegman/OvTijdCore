@@ -134,7 +134,9 @@ public class Request {
                 let stop = generateStop(from: details["Stop"])
                 let passes = details["Passes"]
                 for (passtimeCode, pass) in passes.dictionaryValue {
-                    stop.add(generatePass(passtimeCode, pass: pass))
+                    let pass = generatePass(passtimeCode, pass: pass)
+                    stop.add(pass)
+                    pass.stop = stop
                 }
 
                 stopsResult.append(stop)

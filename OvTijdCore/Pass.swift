@@ -18,6 +18,7 @@ public class Pass {
     public var planning: PassPlanning
 
     public var status: TripStopStatus
+    public weak var stop: Stop?
 
     init(code: String, transport: Transport, timingPoint: TimingPoint, lineDetails: LineDetails, planning: PassPlanning, status: TripStopStatus) {
         self.code = code
