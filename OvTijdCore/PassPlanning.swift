@@ -8,9 +8,15 @@
 
 import Foundation
 
-public struct PassPlanning {
+public struct PassPlanning: CustomStringConvertible {
     public let targetArrivalTime: NSDate
     public let targetDepartureTime: NSDate
     public var expectedArrivalTime: NSDate
-    public var expectedDeparture: NSDate
+    public var expectedDepartureTime: NSDate
+
+    public var description: String {
+        let df = NSDateFormatter()
+        df.dateFormat = "HH:mm:ss"
+        return "\(df.stringFromDate(targetArrivalTime)) \(df.stringFromDate(expectedArrivalTime)) → \(df.stringFromDate(targetDepartureTime)) \(df.stringFromDate(expectedDepartureTime))"
+    }
 }

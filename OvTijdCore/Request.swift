@@ -190,7 +190,7 @@ public class Request {
         let tdt = dateFormatter.dateFromString(planningDict["TargetDepartureTime"]!.stringValue)!
         let edt = dateFormatter.dateFromString(planningDict["ExpectedDepartureTime"]!.stringValue)!
 
-        return PassPlanning(targetArrivalTime: tat, targetDepartureTime: tdt, expectedArrivalTime: eat, expectedDeparture: edt)
+        return PassPlanning(targetArrivalTime: tat, targetDepartureTime: tdt, expectedArrivalTime: eat, expectedDepartureTime: edt)
     }
 
     /**

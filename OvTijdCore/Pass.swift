@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-public class Pass {
+public class Pass: Equatable, CustomStringConvertible {
     public let code: String
     public let transportType: Transport
     public let timingPoint: TimingPoint
@@ -20,7 +20,8 @@ public class Pass {
     public var status: TripStopStatus
     public weak var stop: Stop?
 
-    init(code: String, transport: Transport, timingPoint: TimingPoint, lineDetails: LineDetails, planning: PassPlanning, status: TripStopStatus) {
+    init(code: String, transport: Transport, timingPoint: TimingPoint,
+         lineDetails: LineDetails, planning: PassPlanning, status: TripStopStatus) {
         self.code = code
         self.transportType = transport
         self.timingPoint = timingPoint
@@ -28,4 +29,12 @@ public class Pass {
         self.planning = planning
         self.status = status
     }
+
+    public var description: String {
+        return "\(lineDetails.publicNumber)\t\(lineDetails.destinationName)\t\t\(planning)"
+    }
+}
+
+public func ==(lhs: Pass, rhs: Pass) -> Bool {
+    return lhs.code == rhs.code
 }
