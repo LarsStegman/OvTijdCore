@@ -15,4 +15,12 @@ public enum TripStopStatus: String {
     case Driving
     case Arrived
     case Passed
+
+    public init?(rawValue: String) {
+        if let status = TripStopStatus(rawValue: rawValue.lowercaseString.capitalizedString) {
+            self = status
+        } else {
+            return nil
+        }
+    }
 }

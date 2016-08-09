@@ -42,29 +42,14 @@ public class Request {
             let dataFromNetwork = NSData(contentsOfURL: url)
             if let dataFromApi = dataFromNetwork {
                 let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
-                let stopAreas = self.generateStopAreas(from: queryResults)
+                var stopAreas = [StopArea]()
 
+                for stopArea in queryResults.arrayValue {
+                    stopAreas.append(StopArea.generate(from: stopArea))
+                }
                 callback(stopAreas)
             }
         }
-    }
-
-    /**
-     Generates StopAreas from the specified JSON Object
-     */
-    private func generateStopAreas(from stopAreas: JSON) -> [StopArea] {
-        var results = [StopArea]()
-
-        for stopArea in stopAreas.arrayValue {
-            let town = stopArea["TimingPointTown"].stringValue
-            let name = stopArea["Name"].stringValue
-            let location = CLLocation(latitude: stopArea["Latitude"].doubleValue,
-                                      longitude: stopArea["Longitude"].doubleValue)
-            let code = stopArea["StopAreaCode"].string
-            results.append(StopArea(code: code, name: name, town: town, location: location))
-        }
-
-        return results
     }
 
     /**
@@ -86,7 +71,7 @@ public class Request {
                 let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
                 var timingPoints = [TimingPoint]()
                 for timingPoint in queryResults.arrayValue {
-                    timingPoints.append(self.generateTimingPoint(from: timingPoint))
+                    timingPoints.append(TimingPoint.generate(from: timingPoint))
                 }
 
                 callback(timingPoints)
@@ -94,24 +79,11 @@ public class Request {
         }
     }
 
-    /**
-     Generate timing points from the specified JSON Object.
-     
-     - Parameter: from The JSON from which the timing points are generated.
-     */
-    private func generateTimingPoint(from timingPoint: JSON) -> TimingPoint {
-        let town = timingPoint["TimingPointTown"].stringValue
-        let name = timingPoint["TimingPointName"].stringValue
-        let code = timingPoint["TimingPointCode"].intValue
-        return TimingPoint(timingPointCode: code, timingPointName: name, timingPointTown: town)
-    }
+    // FIXME: From here we need to start working on moving the parse code to the classes/structures
 
     public func stops(forTimingPoints timingPoints: [TimingPoint], handler callback: ([Stop]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            let timingPointCodes = timingPoints.reduce("") {
-                (str: String, timingPoint: TimingPoint) -> String in
-                return str.stringByAppendingString("\(timingPoint.timingPointCode)").stringByAppendingString(",")
-            }
+            let timingPointCodes = timingPoints.map({ "\($0.timingPointCode)" }).joinWithSeparator(", ")
             let request = self.generateURL(base: self.kv78Location,
                                            endpoint: "\(APIPaths.TimingPoint.TimingPointCode)/\(timingPointCodes)",
                                            options: [String: String]())
@@ -131,10 +103,10 @@ public class Request {
         var stopsResult = [Stop]()
         if let stopsDict = stops.dictionary {
             for (_, details) in stopsDict {
-                let stop = generateStop(from: details["Stop"])
+                let stop = Stop.generate(from: details["Stop"])
                 let passes = details["Passes"]
                 for (passtimeCode, pass) in passes.dictionaryValue {
-                    let pass = generatePass(passtimeCode, pass: pass)
+                    let pass = Pass.generate(from: pass, passtimeCode: passtimeCode)
                     stop.add(pass)
                     pass.stop = stop
                 }
@@ -148,49 +120,62 @@ public class Request {
         return [Stop]()
     }
 
-    private func generateStop(from stop: JSON) -> Stop {
-        let stopDict = stop.dictionaryValue
-        let location = CLLocation(latitude: stopDict["Latitude"]!.doubleValue,
-                                  longitude: stopDict["Longitude"]!.doubleValue)
-        let timingPoint = generateTimingPoint(from: stop)
-        return Stop(timingPoint: timingPoint, location: location)
+    public func passes(forIdentifiers identifiers: [String], handler callback: ([Journey]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            let journeyIdentifiers = identifiers.joinWithSeparator(", ")
+            let request = self.generateURL(base: self.kv78Location,
+                                           endpoint: "\(APIPaths.Journey.Journey)/\(journeyIdentifiers)",
+                                           options: [String: String]())
+            let url = NSURL(string: request)!
+            let dataFromNetwork = NSData(contentsOfURL: url)
+            if let dataFromApi = dataFromNetwork {
+                let queryResults = JSON(data: dataFromApi)
+                let journeyPasses = self.generateJourneys(from: queryResults)
+
+                callback(journeyPasses)
+            }
+        }
     }
 
-    private func generatePass(passtimeCode: String, pass: JSON) -> Pass {
-        let passDict = pass.dictionaryValue
-        let transport = Transport(rawValue: passDict["TransportType"]!.stringValue.lowercaseString.capitalizedString)!
-        let timingPoint = generateTimingPoint(from: pass)
-        let lineDetails = generateLineDetails(from: pass)
-        let passPlanning = generatePassPlanning(from: pass)
-        let status = TripStopStatus(rawValue: passDict["TripStopStatus"]!.stringValue.lowercaseString.capitalizedString)!
-        return Pass(code: passtimeCode,
-                    transport: transport,
-                    timingPoint: timingPoint,
-                    lineDetails: lineDetails,
-                    planning: passPlanning,
-                    status: status)
+    private func generateJourneys(from passes: JSON) -> [Journey] {
+        var journeys = [Journey]()
+        if let passDict = passes.dictionary {
+            for (passtimeCode, journey) in passDict {
+                journeys.append(generateJourney(passtimeCode, from: journey))
+            }
+        }
+        return journeys
     }
 
-    private func generateLineDetails(from lineDetails: JSON) -> LineDetails {
-        let lineDetailsDict = lineDetails.dictionaryValue
-        let name = lineDetailsDict["DestinationName50"]!.stringValue
-        let lineName = lineDetailsDict["LineName"]!.stringValue
-        let publicNumber = lineDetailsDict["LinePublicNumber"]!.stringValue
-        return LineDetails(destinationName: name, lineName: lineName, publicNumber: publicNumber)
+    private func generateJourney(passtimeCode: String, from journey: JSON) -> Journey {
+        let journeyDict = journey.dictionaryValue
+        var passes = [JourneyPass]()
+        for (_, pass) in journeyDict["Stops"]!.dictionaryValue {
+            passes.append(generateJourneyPass(passtimeCode, jPass: pass))
+        }
+
     }
 
-    private func generatePassPlanning(from planning: JSON) -> PassPlanning {
-        let planningDict = planning.dictionaryValue
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.timeZone = NSTimeZone(name: "Europe/Amsterdam")
+    
 
-        let tat = dateFormatter.dateFromString(planningDict["TargetArrivalTime"]!.stringValue)!
-        let eat = dateFormatter.dateFromString(planningDict["ExpectedArrivalTime"]!.stringValue)!
-        let tdt = dateFormatter.dateFromString(planningDict["TargetDepartureTime"]!.stringValue)!
-        let edt = dateFormatter.dateFromString(planningDict["ExpectedDepartureTime"]!.stringValue)!
+    private func generateJourneyDetails(from journeyDetails: JSON) -> JourneyDetails {
+        let orderNumber = dict["UserStopOrderNumber"]!.intValue
+        let stopType = JourneyStopType(rawValue: dict["JourneyStopType"]!.stringValue)!
+        let journeyNumber = dict["JourneyNumber"]!.intValue
 
-        return PassPlanning(targetArrivalTime: tat, targetDepartureTime: tdt, expectedArrivalTime: eat, expectedDepartureTime: edt)
+        return JourneyDetails(journeyNumber: journeyNumber, journeyPatternCode: 0, lineDirection: 0)
+    }
+
+    private func generateJourneyPass(passtimeCode: String, jPass: JSON) -> JourneyPass {
+        let pass = generatePass(passtimeCode, pass: jPass)
+        let dict = jPass.dictionaryValue
+        let orderNumber = dict["UserStopOrderNumber"]!.intValue
+        let stopType = JourneyStopType(rawValue: dict["JourneyStopType"]!.stringValue)!
+        let journeyNumber = dict["JourneyNumber"]!.intValue
+        return JourneyPass(pass: pass,
+                           journeyStopType: stopType,
+                           stopOrderNumber: orderNumber,
+                           journeyNumber: journeyNumber)
     }
 
     /**

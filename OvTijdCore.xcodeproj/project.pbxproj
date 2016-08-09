@@ -15,6 +15,8 @@
 		48568B9A1D3E32B3005C97CC /* OVTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48568B991D3E32B3005C97CC /* OVTError.swift */; };
 		4880A2911D58A9AD00D03F14 /* JourneyStopType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4880A2901D58A9AD00D03F14 /* JourneyStopType.swift */; };
 		4880A2931D58C88F00D03F14 /* JourneyPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4880A2921D58C88F00D03F14 /* JourneyPass.swift */; };
+		4880A2951D59DC6B00D03F14 /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4880A2941D59DC6B00D03F14 /* Journey.swift */; };
+		4880A2971D59E85200D03F14 /* JourneyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4880A2961D59E85200D03F14 /* JourneyDetails.swift */; };
 		48A8915A1D36AF4F0010A609 /* OVTManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A891591D36AF4F0010A609 /* OVTManager.swift */; };
 		48B79F671D2FF4C400E6365A /* OvTijdCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 48B79F661D2FF4C400E6365A /* OvTijdCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48B79F6E1D2FF4C400E6365A /* OvTijdCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B79F631D2FF4C400E6365A /* OvTijdCore.framework */; };
@@ -48,6 +50,8 @@
 		48568B991D3E32B3005C97CC /* OVTError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTError.swift; sourceTree = "<group>"; };
 		4880A2901D58A9AD00D03F14 /* JourneyStopType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyStopType.swift; sourceTree = "<group>"; };
 		4880A2921D58C88F00D03F14 /* JourneyPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyPass.swift; sourceTree = "<group>"; };
+		4880A2941D59DC6B00D03F14 /* Journey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Journey.swift; sourceTree = "<group>"; };
+		4880A2961D59E85200D03F14 /* JourneyDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JourneyDetails.swift; sourceTree = "<group>"; };
 		48A891591D36AF4F0010A609 /* OVTManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTManager.swift; sourceTree = "<group>"; };
 		48B79F631D2FF4C400E6365A /* OvTijdCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OvTijdCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B79F661D2FF4C400E6365A /* OvTijdCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OvTijdCore.h; sourceTree = "<group>"; };
@@ -152,6 +156,8 @@
 				48252B321D4651EF009D64B2 /* TripStopStatus.swift */,
 				4880A2901D58A9AD00D03F14 /* JourneyStopType.swift */,
 				4880A2921D58C88F00D03F14 /* JourneyPass.swift */,
+				4880A2941D59DC6B00D03F14 /* Journey.swift */,
+				4880A2961D59E85200D03F14 /* JourneyDetails.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -269,8 +275,10 @@
 			files = (
 				4880A2911D58A9AD00D03F14 /* JourneyStopType.swift in Sources */,
 				48568B9A1D3E32B3005C97CC /* OVTError.swift in Sources */,
+				4880A2971D59E85200D03F14 /* JourneyDetails.swift in Sources */,
 				48D1DC381D364A0900E75A4F /* Pass.swift in Sources */,
 				48A8915A1D36AF4F0010A609 /* OVTManager.swift in Sources */,
+				4880A2951D59DC6B00D03F14 /* Journey.swift in Sources */,
 				48252B311D42B8A2009D64B2 /* PassPlanning.swift in Sources */,
 				48D1DC361D36490200E75A4F /* TimingPoint.swift in Sources */,
 				48252B331D4651EF009D64B2 /* TripStopStatus.swift in Sources */,

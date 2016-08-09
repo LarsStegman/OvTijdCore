@@ -27,6 +27,10 @@ struct APIPaths {
         static let NearOption = "near"
     }
 
+    struct Journey {
+        static let Journey = "journey"
+    }
+
 
     static let maxNumberOfStopAreas = 50
 }

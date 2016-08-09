@@ -9,6 +9,8 @@
 import Foundation
 import CoreLocation
 
+import SwiftyJSON
+
 public struct StopArea: Equatable {
     let code: String?
 
@@ -21,6 +23,16 @@ public struct StopArea: Equatable {
         self.name = name
         self.town = town
         self.location = location
+    }
+
+    static func generate(from json: JSON) -> StopArea {
+        let town = json["TimingPointTown"].stringValue
+        let name = json["Name"].stringValue
+        let location = CLLocation(latitude: json["Latitude"].doubleValue,
+                                  longitude: json["Longitude"].doubleValue)
+        let code = json["StopAreaCode"].string
+
+        return StopArea(code: code, name: name, town: town, location: location)
     }
 }
 

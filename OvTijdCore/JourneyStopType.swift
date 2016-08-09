@@ -8,8 +8,16 @@
 
 import Foundation
 
-public enum JourneyStopType {
+public enum JourneyStopType: String {
     case First
     case Intermediate
     case Last
+
+    public init?(rawValue: String) {
+        if let type = JourneyStopType(rawValue: rawValue.lowercaseString.capitalizedString) {
+            self = type
+        } else {
+            return nil
+        }
+    }
 }

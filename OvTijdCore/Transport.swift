@@ -25,4 +25,12 @@ public enum Transport: String {
         return image
     }
 
+    public init?(rawValue: String) {
+        if let transport = Transport(rawValue: rawValue.lowercaseString.capitalizedString) {
+            self = transport
+        } else {
+            return nil
+        }
+    }
+
 }

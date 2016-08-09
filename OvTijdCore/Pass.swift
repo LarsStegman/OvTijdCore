@@ -9,6 +9,8 @@
 import Foundation
 import CoreLocation
 
+import SwiftyJSON
+
 public class Pass: Equatable, CustomStringConvertible {
     public let code: String
     public let transportType: Transport
@@ -32,6 +34,20 @@ public class Pass: Equatable, CustomStringConvertible {
 
     public var description: String {
         return "\(lineDetails.publicNumber)\t\(lineDetails.destinationName)\t\t\(planning)"
+    }
+
+    static func generate(from json: JSON, passtimeCode: String) -> Pass {
+        let transport = Transport(rawValue: json["TransportType"].stringValue)!
+        let timingPoint = TimingPoint.generate(from: json)
+        let lineDetails = LineDetails.generate(from: json)
+        let passPlanning = PassPlanning.generate(from: json)
+        let status = TripStopStatus(rawValue: json["TripStopStatus"].stringValue)!
+        return Pass(code: passtimeCode,
+                    transport: transport,
+                    timingPoint: timingPoint,
+                    lineDetails: lineDetails,
+                    planning: passPlanning,
+                    status: status)
     }
 }
 

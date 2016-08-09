@@ -13,6 +13,7 @@ public class OVTLocationManager: NSObject, CLLocationManagerDelegate {
 
     private struct Constants {
         static let distanceFilter = 100.0
+        static let accuracy = kCLLocationAccuracyHundredMeters
     }
 
     public static let sharedInstance = OVTLocationManager()
@@ -23,7 +24,7 @@ public class OVTLocationManager: NSObject, CLLocationManagerDelegate {
     lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.desiredAccuracy = Constants.accuracy
         locationManager.distanceFilter = Constants.distanceFilter
         return locationManager
     }()
@@ -50,7 +51,7 @@ public class OVTLocationManager: NSObject, CLLocationManagerDelegate {
 
     // MARK: - LocationManagerDelegate
 
-    public var currentLocation: CLLocation? {
+    var currentLocation: CLLocation? {
         didSet {
             if let newLocation = currentLocation {
                 delegates.forEach { $0.update(newLocation) }
@@ -83,7 +84,8 @@ public class OVTLocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     private func startListening() {
-        guard CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse else {
+        guard CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse ||
+                CLLocationManager.authorizationStatus() == .AuthorizedAlways else {
             locationManager.stopUpdatingLocation()
             self.fail(.NoLocationAccess)
             return
