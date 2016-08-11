@@ -43,5 +43,15 @@ public class OVTManager {
             }
         }
     }
+
+    /**
+     Provides a list of journeys for the provided identifiers
+     
+     - Parameter forIdentifiers: The identifiers of the journeys, i.e. localpasstimecode
+     - Parameter useIn: The closure in which the results will be used.
+     */
+    public func journey(forIdentifiers: [String], useIn callback: ([Journey]) -> Void) {
+        self.request.journeys(forIdentifiers: forIdentifiers, handler: callback)
+    }
 }
 
