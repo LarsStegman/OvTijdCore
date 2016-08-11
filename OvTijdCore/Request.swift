@@ -140,6 +140,14 @@ public class Request {
         return stopsResult
     }
 
+    /**
+     Retrieves the journeys corresponding to the provided identifiers
+     
+     - Important: This method is not executed on the main queue
+     
+     - Parameter forIdentifiers: The identifiers of the journey
+     - Parameter hander:
+     */
     public func journeys(forIdentifiers identifiers: [String], handler callback: ([Journey]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             let journeyIdentifiers = identifiers.joinWithSeparator(",")

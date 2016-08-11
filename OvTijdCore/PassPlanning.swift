@@ -57,6 +57,8 @@ public struct PassPlanning: CustomStringConvertible {
 
             self.init(targetArrivalTime: tat, targetDepartureTime: tdt, expectedArrivalTime: eat, expectedDepartureTime: edt)
         } else {
+            print("PassPlanning: parse error: \(json)")
+
             return nil
         }
     }

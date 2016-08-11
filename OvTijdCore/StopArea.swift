@@ -37,14 +37,15 @@ public struct StopArea: Equatable {
      */
     init?(from json: JSON) {
         let nf = NSNumberFormatter()
-        if let town = json["TimingPointTown"].string,
+        if  let town = json["TimingPointTown"].string,
             let name = json["Name"].string,
             let latitude = nf.numberFromString(json["Latitude"].stringValue) as? Double,
-            let longitude = nf.numberFromString(json["Longitude"].stringValue) as? Double,
-            let code = json["StopAreaCode"].string {
-
+            let longitude = nf.numberFromString(json["Longitude"].stringValue) as? Double {
+            let code = json["StopAreaCode"].string
             self.init(code: code, name: name, town: town, location: CLLocation(latitude: latitude, longitude: longitude))
         } else {
+            print("StopArea: parse error: \(json)")
+
             return nil
         }
     }

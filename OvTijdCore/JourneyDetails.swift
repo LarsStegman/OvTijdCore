@@ -47,6 +47,7 @@ public struct JourneyDetails {
             self.init(journeyNumber: journeyNumber, journeyPatternCode: journeyPatternCode,
                       lineDirection: lineDirection, orderNumber: orderNumber, stopType: stopType)
         } else {
+            print("JourneyDetails: parse error: \(json)")
             return nil
         }
     }

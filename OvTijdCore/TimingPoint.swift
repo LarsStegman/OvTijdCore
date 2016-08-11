@@ -11,11 +11,11 @@ import Foundation
 import SwiftyJSON
 
 public struct TimingPoint {
-    public let timingPointCode: Int
+    public let timingPointCode: String
     public let timingPointName: String
     public let timingPointTown: String
 
-    init(timingPointCode: Int, timingPointName: String, timingPointTown: String) {
+    init(timingPointCode: String, timingPointName: String, timingPointTown: String) {
         self.timingPointCode = timingPointCode
         self.timingPointName = timingPointName
         self.timingPointTown = timingPointTown
@@ -30,13 +30,14 @@ public struct TimingPoint {
          - "TimingPointCode" : `Int`
      */
     init?(from json: JSON) {
-        let nf = NSNumberFormatter()
         if  let town = json["TimingPointTown"].string,
             let name = json["TimingPointName"].string,
-            let code = nf.numberFromString(json["TimingPointCode"].stringValue) as? Int {
+            let code = json["TimingPointCode"].string {
 
             self.init(timingPointCode: code, timingPointName: name, timingPointTown: town)
         } else {
+            print("TimingPoint: parse error: \(json)")
+
             return nil
         }
     }

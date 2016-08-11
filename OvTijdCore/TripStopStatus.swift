@@ -21,6 +21,8 @@ public enum TripStopStatus: String {
             let status = TripStopStatus(rawValue: statusString.lowercaseString.capitalizedString) {
             self = status
         } else {
+            print("TripStopStatus: parse error: \(string)")
+
             return nil
         }
     }

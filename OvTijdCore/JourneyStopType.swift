@@ -17,6 +17,7 @@ public enum JourneyStopType: String {
         if let type = JourneyStopType(rawValue: string.lowercaseString.capitalizedString) {
             self = type
         } else {
+            print("JourneyStopType: parse error: \(string)")
             return nil
         }
     }

@@ -62,6 +62,8 @@ public class Pass: Equatable, CustomStringConvertible {
                 planning: passPlanning,
                 status: status)
         } else {
+            print("Pass: parse error: \(json)")
+
             return nil
         }
     }

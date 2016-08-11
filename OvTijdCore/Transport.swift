@@ -20,6 +20,7 @@ public enum Transport: String {
             let transport = Transport(rawValue: transportString.lowercaseString.capitalizedString) {
             self = transport
         } else {
+            print("Transport: parse error: \(string)")
             return nil
         }
     }

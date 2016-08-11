@@ -36,6 +36,7 @@ public struct LineDetails {
 
             self.init(destinationName: name, lineName: lineName, publicNumber: publicNumber)
         } else {
+            print("LineDetails: parse error: \(json)")
             return nil
         }
     }

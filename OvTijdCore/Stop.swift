@@ -42,6 +42,8 @@ public class Stop: NSObject {
 
             self.init(timingPoint: timingPoint, location: CLLocation(latitude: latitude, longitude: longitude))
         } else {
+            print("Stop: parse error: \(json)")
+
             return nil
         }
     }
