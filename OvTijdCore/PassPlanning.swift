@@ -22,22 +22,42 @@ public struct PassPlanning: CustomStringConvertible {
         return "\(df.stringFromDate(targetArrivalTime)) \(df.stringFromDate(expectedArrivalTime)) → \(df.stringFromDate(targetDepartureTime)) \(df.stringFromDate(expectedDepartureTime))"
     }
 
-    static let dateFormatter: NSDateFormatter = {
+    init(targetArrivalTime: NSDate, targetDepartureTime: NSDate,
+         expectedArrivalTime: NSDate, expectedDepartureTime: NSDate) {
+        self.targetArrivalTime = targetArrivalTime
+        self.targetDepartureTime = targetDepartureTime
+        self.expectedArrivalTime = expectedArrivalTime
+        self.expectedDepartureTime = expectedDepartureTime
+    }
+
+    /**
+     Generate LineDetails from the given JSON object.
+
+     - Important: The dates must be in format `"yyyy-MM-dd'T'HH:mm:ss"` and are parsed in time zone `"Europe/Amsterdam"`
+
+     - Parameter from: A json object with the following keys:
+         - "TargetArrivalTime"      : `String`
+         - "ExpectedArrivalTime"    : `String`
+         - "TargetDepartureTime"    : `String`
+         - "ExpectedDepartureTime"  : `String`
+     */
+    init?(from json: JSON) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         dateFormatter.timeZone = NSTimeZone(name: "Europe/Amsterdam")
-        return dateFormatter
-    }()
 
-    static func generate(from json: JSON) -> PassPlanning {
-        let tat = dateFormatter.dateFromString(json["TargetArrivalTime"].stringValue)!
-        let eat = dateFormatter.dateFromString(json["ExpectedArrivalTime"].stringValue)!
-        let tdt = dateFormatter.dateFromString(json["TargetDepartureTime"].stringValue)!
-        let edt = dateFormatter.dateFromString(json["ExpectedDepartureTime"].stringValue)!
+        if  let tatString = json["TargetArrivalTime"].string,
+            let tat = dateFormatter.dateFromString(tatString),
+            let eatString = json["ExpectedArrivalTime"].string,
+            let eat = dateFormatter.dateFromString(eatString),
+            let tdtString = json["TargetDepartureTime"].string,
+            let tdt = dateFormatter.dateFromString(tdtString),
+            let edtString = json["ExpectedDepartureTime"].string,
+            let edt = dateFormatter.dateFromString(edtString) {
 
-        return PassPlanning(targetArrivalTime: tat,
-                            targetDepartureTime: tdt,
-                            expectedArrivalTime: eat,
-                            expectedDepartureTime: edt)
+            self.init(targetArrivalTime: tat, targetDepartureTime: tdt, expectedArrivalTime: eat, expectedDepartureTime: edt)
+        } else {
+            return nil
+        }
     }
 }

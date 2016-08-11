@@ -13,8 +13,8 @@ public enum JourneyStopType: String {
     case Intermediate
     case Last
 
-    public init?(rawValue: String) {
-        if let type = JourneyStopType(rawValue: rawValue.lowercaseString.capitalizedString) {
+    public init?(string: String) {
+        if let type = JourneyStopType(rawValue: string.lowercaseString.capitalizedString) {
             self = type
         } else {
             return nil

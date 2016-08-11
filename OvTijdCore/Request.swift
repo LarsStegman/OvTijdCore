@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+
 import SwiftyJSON
 
 /**
@@ -28,14 +29,15 @@ public class Request {
  
      - Important: This method is not executed on the main queue.
 
-     - Parameter location The location
-     - Parameter handler The found StopAreas will be provided via a callback.
+     - Parameter location: The location
+     - Parameter handler: The found StopAreas will be provided via a callback.
      */
     public func stopAreas(near: CLLocation, handler callback: ([StopArea]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             let request = self.generateURL(base: self.apiLocation,
                                        endpoint: "\(APIPaths.Stops.Stops)/\(APIPaths.Stops.Endpoint)",
-                                       options: [APIPaths.Stops.NearOption: "\(near.coordinate.latitude),\(near.coordinate.longitude)", "limit": "\(APIPaths.maxNumberOfStopAreas)"])
+                                       options: [APIPaths.Stops.NearOption: "\(near.coordinate.latitude),\(near.coordinate.longitude)",
+                                        "limit": "\(APIPaths.maxNumberOfStopAreas)"])
 
             let url = NSURL(string: request)!
 
@@ -45,7 +47,9 @@ public class Request {
                 var stopAreas = [StopArea]()
 
                 for stopArea in queryResults.arrayValue {
-                    stopAreas.append(StopArea.generate(from: stopArea))
+                    if let sa = StopArea(from: stopArea) {
+                        stopAreas.append(sa)
+                    }
                 }
                 callback(stopAreas)
             }
@@ -57,21 +61,26 @@ public class Request {
      
      - Important: This method is not executed on the main queue.
      
-     - Parameter: inStopArea The stop area for which the timing points have to be retrieved
-     - Parameter: handler The retrieved timing points will be provided via the callback
+     - Parameter inStopArea: The stop area for which the timing points have to be retrieved
+     - Parameter handler: The retrieved timing points will be provided via the callback
      */
     public func timingPoints(inStopArea stopArea: StopArea, handler callback: ([TimingPoint]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             let request = self.generateURL(base: self.apiLocation,
                                        endpoint: "\(APIPaths.Stops.Stops)/\(APIPaths.TimingPoint.Endpoint)",
-                                        options: [APIPaths.TimingPoint.TownOption: stopArea.town, APIPaths.TimingPoint.NameOption: stopArea.name])
+                                        options: [APIPaths.TimingPoint.TownOption: stopArea.town,
+                                            APIPaths.TimingPoint.NameOption: stopArea.name])
             let url = NSURL(string: request)!
             let dataFromNetwork = NSData(contentsOfURL: url)
             if let dataFromApi = dataFromNetwork {
                 let queryResults = self.rewriteOvApi(from: JSON(data: dataFromApi))
                 var timingPoints = [TimingPoint]()
+
                 for timingPoint in queryResults.arrayValue {
-                    timingPoints.append(TimingPoint.generate(from: timingPoint))
+                    if let tp = TimingPoint(from: timingPoint) {
+                        timingPoints.append(tp)
+                    }
+
                 }
 
                 callback(timingPoints)
@@ -79,11 +88,18 @@ public class Request {
         }
     }
 
-    // FIXME: From here we need to start working on moving the parse code to the classes/structures
+    /**
+     Retrieves the Stop for the given TimingPoints. The stops will also contain a list of passes which will occur in 
+     the near future.
 
+     - Important: This method is not executed on the main queue.
+
+     - Parameter forTimingPoints: A list of timing points
+     - Parameter handler: The found Stops will be provided via a callback.
+     */
     public func stops(forTimingPoints timingPoints: [TimingPoint], handler callback: ([Stop]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            let timingPointCodes = timingPoints.map({ "\($0.timingPointCode)" }).joinWithSeparator(", ")
+            let timingPointCodes = timingPoints.map({ "\($0.timingPointCode)" }).joinWithSeparator(",")
             let request = self.generateURL(base: self.kv78Location,
                                            endpoint: "\(APIPaths.TimingPoint.TimingPointCode)/\(timingPointCodes)",
                                            options: [String: String]())
@@ -99,30 +115,34 @@ public class Request {
         }
     }
 
+
     private func generateStops(from stops: JSON) -> [Stop] {
         var stopsResult = [Stop]()
-        if let stopsDict = stops.dictionary {
-            for (_, details) in stopsDict {
-                let stop = Stop.generate(from: details["Stop"])
-                let passes = details["Passes"]
-                for (passtimeCode, pass) in passes.dictionaryValue {
-                    let pass = Pass.generate(from: pass, passtimeCode: passtimeCode)
-                    stop.add(pass)
-                    pass.stop = stop
-                }
-
-                stopsResult.append(stop)
-            }
-
+        guard let stopsDict = stops.dictionary else {
             return stopsResult
         }
 
-        return [Stop]()
+        for (_, details) in stopsDict {
+            guard let stop = Stop(from: details["Stop"]) else {
+                break;
+            }
+
+            for (passtimeCode, pass) in details["Passes"].dictionaryValue {
+                if let pass = Pass(from: pass, passtimeCode: passtimeCode) {
+                    stop.add(pass)
+                    pass.stop = stop
+                }
+            }
+
+            stopsResult.append(stop)
+        }
+
+        return stopsResult
     }
 
-    public func passes(forIdentifiers identifiers: [String], handler callback: ([Journey]) -> Void) {
+    public func journeys(forIdentifiers identifiers: [String], handler callback: ([Journey]) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            let journeyIdentifiers = identifiers.joinWithSeparator(", ")
+            let journeyIdentifiers = identifiers.joinWithSeparator(",")
             let request = self.generateURL(base: self.kv78Location,
                                            endpoint: "\(APIPaths.Journey.Journey)/\(journeyIdentifiers)",
                                            options: [String: String]())
@@ -139,44 +159,33 @@ public class Request {
 
     private func generateJourneys(from passes: JSON) -> [Journey] {
         var journeys = [Journey]()
-        if let passDict = passes.dictionary {
-            for (passtimeCode, journey) in passDict {
-                journeys.append(generateJourney(passtimeCode, from: journey))
-            }
+        guard let passDict = passes.dictionary else {
+            return journeys
         }
+
+        for (passtimeCode, journey) in passDict {
+            let stops = journey["Stops"]
+            guard let first = stops.first?.1,
+                  let details = JourneyDetails(from: first) else {
+                break
+            }
+
+            let journey = Journey(details: details)
+            var passes = [Pass]()
+            for (_, pass) in stops {
+                if let journeyPass = Pass(from: pass, passtimeCode: passtimeCode) {
+                    passes.append(journeyPass)
+                }
+            }
+
+            journey.add(passes)
+            journeys.append(journey)
+        }
+
         return journeys
     }
 
-    private func generateJourney(passtimeCode: String, from journey: JSON) -> Journey {
-        let journeyDict = journey.dictionaryValue
-        var passes = [JourneyPass]()
-        for (_, pass) in journeyDict["Stops"]!.dictionaryValue {
-            passes.append(generateJourneyPass(passtimeCode, jPass: pass))
-        }
 
-    }
-
-    
-
-    private func generateJourneyDetails(from journeyDetails: JSON) -> JourneyDetails {
-        let orderNumber = dict["UserStopOrderNumber"]!.intValue
-        let stopType = JourneyStopType(rawValue: dict["JourneyStopType"]!.stringValue)!
-        let journeyNumber = dict["JourneyNumber"]!.intValue
-
-        return JourneyDetails(journeyNumber: journeyNumber, journeyPatternCode: 0, lineDirection: 0)
-    }
-
-    private func generateJourneyPass(passtimeCode: String, jPass: JSON) -> JourneyPass {
-        let pass = generatePass(passtimeCode, pass: jPass)
-        let dict = jPass.dictionaryValue
-        let orderNumber = dict["UserStopOrderNumber"]!.intValue
-        let stopType = JourneyStopType(rawValue: dict["JourneyStopType"]!.stringValue)!
-        let journeyNumber = dict["JourneyNumber"]!.intValue
-        return JourneyPass(pass: pass,
-                           journeyStopType: stopType,
-                           stopOrderNumber: orderNumber,
-                           journeyNumber: journeyNumber)
-    }
 
     /**
      Generates a dictionary based on the given data.
@@ -189,7 +198,7 @@ public class Request {
 
      `[{key0: value0, key1: value1}, {key0: value0, key1: value1}, ...]`
 
-     - Returns The rewritten data.
+     - Returns: The rewritten JSON object.
      */
     private func rewriteOvApi(from json: JSON) -> JSON {
         var results = [[String: String]]()

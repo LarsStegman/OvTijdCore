@@ -26,10 +26,23 @@ public class Stop: NSObject {
         self.timingPoint = timingPoint
     }
 
-    class func generate(from json: JSON) -> Stop {
-        let location = CLLocation(latitude: json["Latitude"].doubleValue,
-                                  longitude: json["Longitude"].doubleValue)
-        let timingPoint = TimingPoint.generate(from: json)
-        return Stop(timingPoint: timingPoint, location: location)
+    /**
+     Generate LineDetails from the given JSON object.
+
+     - Parameter from: A json object with the following keys:
+         - "Latitude"          : `Double`
+         - "Longitude"         : `Double`
+         - Required keys for `TimingPoint`
+     */
+    convenience init?(from json: JSON) {
+        let nf = NSNumberFormatter()
+        if  let latitude = nf.numberFromString(json["Latitude"].stringValue) as? Double,
+            let longitude = nf.numberFromString(json["Longitude"].stringValue) as? Double,
+            let timingPoint = TimingPoint(from: json) {
+
+            self.init(timingPoint: timingPoint, location: CLLocation(latitude: latitude, longitude: longitude))
+        } else {
+            return nil
+        }
     }
 }

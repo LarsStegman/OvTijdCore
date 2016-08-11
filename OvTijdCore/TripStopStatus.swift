@@ -16,8 +16,9 @@ public enum TripStopStatus: String {
     case Arrived
     case Passed
 
-    public init?(rawValue: String) {
-        if let status = TripStopStatus(rawValue: rawValue.lowercaseString.capitalizedString) {
+    public init?(string: String?) {
+        if let statusString = string,
+            let status = TripStopStatus(rawValue: statusString.lowercaseString.capitalizedString) {
             self = status
         } else {
             return nil

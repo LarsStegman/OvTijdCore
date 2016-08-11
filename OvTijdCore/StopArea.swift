@@ -25,14 +25,28 @@ public struct StopArea: Equatable {
         self.location = location
     }
 
-    static func generate(from json: JSON) -> StopArea {
-        let town = json["TimingPointTown"].stringValue
-        let name = json["Name"].stringValue
-        let location = CLLocation(latitude: json["Latitude"].doubleValue,
-                                  longitude: json["Longitude"].doubleValue)
-        let code = json["StopAreaCode"].string
+    /**
+     Generate StopArea from the given JSON object.
 
-        return StopArea(code: code, name: name, town: town, location: location)
+     - parameter from: A json object with the following keys:
+         - "StopAreaCode"       : `String`
+         - "Name"               : `String`
+         - "Longitude"          : `Double`
+         - "Latitude"           : `Double`
+         - "TimingPointTown"    : `String`
+     */
+    init?(from json: JSON) {
+        let nf = NSNumberFormatter()
+        if let town = json["TimingPointTown"].string,
+            let name = json["Name"].string,
+            let latitude = nf.numberFromString(json["Latitude"].stringValue) as? Double,
+            let longitude = nf.numberFromString(json["Longitude"].stringValue) as? Double,
+            let code = json["StopAreaCode"].string {
+
+            self.init(code: code, name: name, town: town, location: CLLocation(latitude: latitude, longitude: longitude))
+        } else {
+            return nil
+        }
     }
 }
 

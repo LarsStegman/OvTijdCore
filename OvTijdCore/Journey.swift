@@ -2,37 +2,29 @@
 //  Journey.swift
 //  OvTijdCore
 //
-//  Created by Lars Stegman on 09-08-16.
+//  Created by Lars Stegman on 10-08-16.
 //  Copyright © 2016 Stegman. All rights reserved.
 //
 
 import Foundation
 
 public class Journey {
-
-    public private(set) var passes = [JourneyPass]() {
+    public let details: JourneyDetails
+    public private(set) var passes = [Pass]() {
         didSet {
-            passes.sortInPlace({ $0.stopOrderNumber < $1.stopOrderNumber })
+            passes.sortInPlace({ $0.journeyDetails.orderNumber < $1.journeyDetails.orderNumber })
         }
     }
-    public let operatorCode: String
-    public let transport: Transport
 
-    public let journeyDetails: JourneyDetails
-    public let lineDetails: LineDetails
-
-    init(journeyDetails: JourneyDetails, operatorCode: String, transportType: Transport, lineDetails: LineDetails) {
-        self.journeyDetails = journeyDetails
-        self.operatorCode = operatorCode
-        self.transport = transportType
-        self.lineDetails = lineDetails
+    init(details: JourneyDetails) {
+        self.details = details
     }
 
-    public func add(pass: JourneyPass) {
+    public func add(pass: Pass) {
         passes.append(pass)
     }
 
-    public func add(passes: [JourneyPass]) {
+    public func add(passes: [Pass]) {
         self.passes.appendContentsOf(passes)
     }
 }

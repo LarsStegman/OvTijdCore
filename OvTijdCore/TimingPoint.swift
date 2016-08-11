@@ -15,15 +15,30 @@ public struct TimingPoint {
     public let timingPointName: String
     public let timingPointTown: String
 
-    /**
-     Generate timing points from the specified JSON Object.
-
-     - Parameter: from The JSON from which the timing points are generated.
-     */
-    static func generate(from json: JSON) -> TimingPoint {
-        let town = json["TimingPointTown"].stringValue
-        let name = json["TimingPointName"].stringValue
-        let code = json["TimingPointCode"].intValue
-        return TimingPoint(timingPointCode: code, timingPointName: name, timingPointTown: town)
+    init(timingPointCode: Int, timingPointName: String, timingPointTown: String) {
+        self.timingPointCode = timingPointCode
+        self.timingPointName = timingPointName
+        self.timingPointTown = timingPointTown
     }
+
+    /**
+     Generate timing point from the given JSON Object.
+
+     - Parameter from: A json object with the following keys:
+         - "TimingPointTown" : `String`
+         - "TimingPointName" : `String`
+         - "TimingPointCode" : `Int`
+     */
+    init?(from json: JSON) {
+        let nf = NSNumberFormatter()
+        if  let town = json["TimingPointTown"].string,
+            let name = json["TimingPointName"].string,
+            let code = nf.numberFromString(json["TimingPointCode"].stringValue) as? Int {
+
+            self.init(timingPointCode: code, timingPointName: name, timingPointTown: town)
+        } else {
+            return nil
+        }
+    }
+
 }

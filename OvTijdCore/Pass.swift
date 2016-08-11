@@ -17,37 +17,57 @@ public class Pass: Equatable, CustomStringConvertible {
     public let timingPoint: TimingPoint
 
     public let lineDetails: LineDetails
+    public let journeyDetails: JourneyDetails
     public var planning: PassPlanning
 
     public var status: TripStopStatus
     public weak var stop: Stop?
 
     init(code: String, transport: Transport, timingPoint: TimingPoint,
-         lineDetails: LineDetails, planning: PassPlanning, status: TripStopStatus) {
+         lineDetails: LineDetails, journeyDetails: JourneyDetails, planning: PassPlanning, status: TripStopStatus) {
         self.code = code
         self.transportType = transport
         self.timingPoint = timingPoint
         self.lineDetails = lineDetails
+        self.journeyDetails = journeyDetails
         self.planning = planning
         self.status = status
     }
 
-    public var description: String {
-        return "\(lineDetails.publicNumber)\t\(lineDetails.destinationName)\t\t\(planning)"
+    /**
+     Generate LineDetails from the given JSON object.
+
+     - Parameter from: A json object with the following keys:
+         - "TransportType"          : `String`
+         - "TripStopStatus"         : `String`
+         - Required keys for `TimingPoint`
+         - Required keys for `LineDetails`
+         - Required keys for `PassPlanning`
+         - Required keys for `JourneyDetails`
+     - Parameter passtimeCode: A code indicating the local pass time code
+     */
+    convenience init?(from json: JSON, passtimeCode: String) {
+        if  let transport = Transport(string: json["TransportType"].string),
+            let timingPoint = TimingPoint(from: json),
+            let lineDetails = LineDetails(from: json),
+            let passPlanning = PassPlanning(from: json),
+            let journeyDetails = JourneyDetails(from: json),
+            let status = TripStopStatus(string: json["TripStopStatus"].string) {
+            
+            self.init(code: passtimeCode,
+                transport: transport,
+                timingPoint: timingPoint,
+                lineDetails: lineDetails,
+                journeyDetails: journeyDetails,
+                planning: passPlanning,
+                status: status)
+        } else {
+            return nil
+        }
     }
 
-    static func generate(from json: JSON, passtimeCode: String) -> Pass {
-        let transport = Transport(rawValue: json["TransportType"].stringValue)!
-        let timingPoint = TimingPoint.generate(from: json)
-        let lineDetails = LineDetails.generate(from: json)
-        let passPlanning = PassPlanning.generate(from: json)
-        let status = TripStopStatus(rawValue: json["TripStopStatus"].stringValue)!
-        return Pass(code: passtimeCode,
-                    transport: transport,
-                    timingPoint: timingPoint,
-                    lineDetails: lineDetails,
-                    planning: passPlanning,
-                    status: status)
+    public var description: String {
+        return "\(lineDetails.publicNumber)\t\(lineDetails.destinationName)\t\t\(planning)"
     }
 }
 
