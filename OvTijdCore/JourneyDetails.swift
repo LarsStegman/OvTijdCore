@@ -37,15 +37,14 @@ public struct JourneyDetails {
      */
     init?(from json: JSON) {
         let nf = NSNumberFormatter()
+        nf.decimalSeparator = "."
         if  let journeyNumber = nf.numberFromString(json["JourneyNumber"].stringValue) as? Int,
             let journeyPatternCode = nf.numberFromString(json["JourneyPatternCode"].stringValue) as? Int,
             let lineDirection = nf.numberFromString(json["LineDirection"].stringValue) as? Int,
-            let orderNumber = nf.numberFromString(json["UserStopOrderNumber"].stringValue) as? Int,
-            let journeyStopTypeString = json["JourneyStopType"].string,
-            let stopType = JourneyStopType(string: journeyStopTypeString) {
+            let orderNumber = nf.numberFromString(json["UserStopOrderNumber"].stringValue) as? Int {
 
             self.init(journeyNumber: journeyNumber, journeyPatternCode: journeyPatternCode,
-                      lineDirection: lineDirection, orderNumber: orderNumber, stopType: stopType)
+                      lineDirection: lineDirection, orderNumber: orderNumber)
         } else {
             print("JourneyDetails: parse error: \(json)")
             return nil

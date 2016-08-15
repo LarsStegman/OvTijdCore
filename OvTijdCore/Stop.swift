@@ -36,6 +36,7 @@ public class Stop: NSObject {
      */
     convenience init?(from json: JSON) {
         let nf = NSNumberFormatter()
+        nf.decimalSeparator = "."
         if  let latitude = nf.numberFromString(json["Latitude"].stringValue) as? Double,
             let longitude = nf.numberFromString(json["Longitude"].stringValue) as? Double,
             let timingPoint = TimingPoint(from: json) {
