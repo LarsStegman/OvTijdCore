@@ -10,14 +10,17 @@ import Foundation
 
 public class Journey {
     public let details: JourneyDetails
+    public let lineDetails: LineDetails
+
     public private(set) var passes = [Pass]() {
         didSet {
             passes.sortInPlace({ $0.journeyDetails.orderNumber < $1.journeyDetails.orderNumber })
         }
     }
 
-    init(details: JourneyDetails) {
+    init(details: JourneyDetails, lineDetails: LineDetails) {
         self.details = details
+        self.lineDetails = lineDetails
     }
 
     public func add(pass: Pass) {

@@ -13,7 +13,6 @@ import SwiftyJSON
 
 public class Pass: Equatable, CustomStringConvertible {
     public let code: String
-    public let transportType: Transport
     public let timingPoint: TimingPoint
 
     public let lineDetails: LineDetails
@@ -23,15 +22,17 @@ public class Pass: Equatable, CustomStringConvertible {
     public var status: TripStopStatus
     public weak var stop: Stop?
 
-    init(code: String, transport: Transport, timingPoint: TimingPoint,
-         lineDetails: LineDetails, journeyDetails: JourneyDetails, planning: PassPlanning, status: TripStopStatus) {
+    public let stopType: JourneyStopType
+
+    init(code: String, timingPoint: TimingPoint,
+         lineDetails: LineDetails, journeyDetails: JourneyDetails, planning: PassPlanning, status: TripStopStatus, stopType: JourneyStopType) {
         self.code = code
-        self.transportType = transport
         self.timingPoint = timingPoint
         self.lineDetails = lineDetails
         self.journeyDetails = journeyDetails
         self.planning = planning
         self.status = status
+        self.stopType = stopType
     }
 
     /**
@@ -47,23 +48,22 @@ public class Pass: Equatable, CustomStringConvertible {
      - Parameter passtimeCode: A code indicating the local pass time code
      */
     convenience init?(from json: JSON, passtimeCode: String) {
-        if  let transport = Transport(string: json["TransportType"].string),
-            let timingPoint = TimingPoint(from: json),
+        if  let timingPoint = TimingPoint(from: json),
             let lineDetails = LineDetails(from: json),
             let passPlanning = PassPlanning(from: json),
             let journeyDetails = JourneyDetails(from: json),
-            let status = TripStopStatus(string: json["TripStopStatus"].string) {
+            let status = TripStopStatus(string: json["TripStopStatus"].string),
+            let stopType = JourneyStopType(string: json["JourneyStopType"].string) {
             
             self.init(code: passtimeCode,
-                transport: transport,
                 timingPoint: timingPoint,
                 lineDetails: lineDetails,
                 journeyDetails: journeyDetails,
                 planning: passPlanning,
-                status: status)
+                status: status,
+                stopType: stopType)
         } else {
             print("Pass: parse error: \(json)")
-
             return nil
         }
     }

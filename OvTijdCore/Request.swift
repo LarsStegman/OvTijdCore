@@ -173,12 +173,13 @@ public class Request {
 
         for (passtimeCode, journey) in passDict {
             let stops = journey["Stops"]
-            guard let first = stops.first?.1,
-                  let details = JourneyDetails(from: first) else {
+            guard   let first = stops.first?.1,
+                    let details = JourneyDetails(from: first),
+                    let lineDetails = LineDetails(from: first) else {
                 break
             }
 
-            let journey = Journey(details: details)
+            let journey = Journey(details: details, lineDetails: lineDetails)
             var passes = [Pass]()
             for (_, pass) in stops {
                 if let journeyPass = Pass(from: pass, passtimeCode: passtimeCode) {

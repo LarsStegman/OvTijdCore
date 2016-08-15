@@ -15,14 +15,12 @@ public struct JourneyDetails {
     public let journeyPatternCode: Int
     public let lineDirection: Int
     public let orderNumber: Int
-    public let stopType: JourneyStopType
 
-    init(journeyNumber: Int, journeyPatternCode: Int, lineDirection: Int, orderNumber: Int, stopType: JourneyStopType) {
+    init(journeyNumber: Int, journeyPatternCode: Int, lineDirection: Int, orderNumber: Int) {
         self.journeyNumber = journeyNumber
         self.journeyPatternCode = journeyPatternCode
         self.lineDirection = lineDirection
         self.orderNumber = orderNumber
-        self.stopType = stopType
     }
 
     /**
