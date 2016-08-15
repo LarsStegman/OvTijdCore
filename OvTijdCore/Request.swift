@@ -231,10 +231,15 @@ public class Request {
         if options.count > 0 {
             url += "?"
         }
+        // Replacing the ampersands in the value and key should be done in `stringByAddingPercentEncodingWithAllowedCharacters:_`, but the implementation is bugged atm. If this is fixed in the future, please do so.
         for (key, value) in options {
-            url += "\(key)=\(value)&"
+            url += key.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                .stringByReplacingOccurrencesOfString("&", withString: "%26").stringByAppendingString("=")
+
+            url += value.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                .stringByReplacingOccurrencesOfString("&", withString: "%26").stringByAppendingString("&")
         }
-        return url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return url
     }
 
 }
