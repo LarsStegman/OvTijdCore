@@ -25,11 +25,14 @@ public struct MessagePlanning {
         let df = NSDateFormatter()
         df.timeZone = NSTimeZone(name: "Europe/Amsterdam")
         df.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
         if  let duration = MessageDuration(string: json["MessageDurationType"].string),
             let startString = json["MessageStartTime"].string,
-            let start = df.dateFromString(startString),
-            let endString = json["MessageEndTime"].string {
-            let end = df.dateFromString(endString)
+            let start = df.dateFromString(startString) {
+            var end: NSDate? = nil
+            if let endString = json["MessageEndTime"].string {
+                end = df.dateFromString(endString)
+            }
 
             self.init(duration: duration, start: start, end: end)
         } else {
