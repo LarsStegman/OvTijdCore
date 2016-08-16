@@ -11,6 +11,10 @@
 		48252B311D42B8A2009D64B2 /* PassPlanning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48252B301D42B8A2009D64B2 /* PassPlanning.swift */; };
 		48252B331D4651EF009D64B2 /* TripStopStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48252B321D4651EF009D64B2 /* TripStopStatus.swift */; };
 		48252B351D47FA52009D64B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48252B341D47FA52009D64B2 /* Assets.xcassets */; };
+		484997E91D63807A00E26B67 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484997E81D63807A00E26B67 /* Message.swift */; };
+		484997EC1D63809900E26B67 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484997EB1D63809900E26B67 /* MessageType.swift */; };
+		484997EE1D6380F400E26B67 /* MessageDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484997ED1D6380F400E26B67 /* MessageDuration.swift */; };
+		484997F01D63870300E26B67 /* MessagePlanning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484997EF1D63870300E26B67 /* MessagePlanning.swift */; };
 		485499641D5B9119006503C9 /* Journey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485499631D5B9119006503C9 /* Journey.swift */; };
 		48568B981D3E160D005C97CC /* OVTLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48568B971D3E160D005C97CC /* OVTLocationManager.swift */; };
 		48568B9A1D3E32B3005C97CC /* OVTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48568B991D3E32B3005C97CC /* OVTError.swift */; };
@@ -45,6 +49,10 @@
 		48252B301D42B8A2009D64B2 /* PassPlanning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassPlanning.swift; sourceTree = "<group>"; };
 		48252B321D4651EF009D64B2 /* TripStopStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripStopStatus.swift; sourceTree = "<group>"; };
 		48252B341D47FA52009D64B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		484997E81D63807A00E26B67 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		484997EB1D63809900E26B67 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		484997ED1D6380F400E26B67 /* MessageDuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDuration.swift; sourceTree = "<group>"; };
+		484997EF1D63870300E26B67 /* MessagePlanning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagePlanning.swift; sourceTree = "<group>"; };
 		485499631D5B9119006503C9 /* Journey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Journey.swift; sourceTree = "<group>"; };
 		48568B971D3E160D005C97CC /* OVTLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTLocationManager.swift; sourceTree = "<group>"; };
 		48568B991D3E32B3005C97CC /* OVTError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OVTError.swift; sourceTree = "<group>"; };
@@ -87,6 +95,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		484997EA1D63807D00E26B67 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				484997E81D63807A00E26B67 /* Message.swift */,
+				484997EB1D63809900E26B67 /* MessageType.swift */,
+				484997ED1D6380F400E26B67 /* MessageDuration.swift */,
+				484997EF1D63870300E26B67 /* MessagePlanning.swift */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
 		48B79F591D2FF4C400E6365A = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +174,7 @@
 				4880A2901D58A9AD00D03F14 /* JourneyStopType.swift */,
 				4880A2961D59E85200D03F14 /* JourneyDetails.swift */,
 				485499631D5B9119006503C9 /* Journey.swift */,
+				484997EA1D63807D00E26B67 /* Message */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -270,9 +290,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				484997F01D63870300E26B67 /* MessagePlanning.swift in Sources */,
+				484997EE1D6380F400E26B67 /* MessageDuration.swift in Sources */,
 				4880A2911D58A9AD00D03F14 /* JourneyStopType.swift in Sources */,
 				48568B9A1D3E32B3005C97CC /* OVTError.swift in Sources */,
 				4880A2971D59E85200D03F14 /* JourneyDetails.swift in Sources */,
+				484997E91D63807A00E26B67 /* Message.swift in Sources */,
 				48D1DC381D364A0900E75A4F /* Pass.swift in Sources */,
 				485499641D5B9119006503C9 /* Journey.swift in Sources */,
 				48A8915A1D36AF4F0010A609 /* OVTManager.swift in Sources */,
@@ -284,6 +307,7 @@
 				48D1DC321D36425300E75A4F /* StopArea.swift in Sources */,
 				48D1DC341D36432200E75A4F /* Stop.swift in Sources */,
 				48D1DC3E1D364C2B00E75A4F /* APIPaths.swift in Sources */,
+				484997EC1D63809900E26B67 /* MessageType.swift in Sources */,
 				48252B2F1D42B83A009D64B2 /* LineDetails.swift in Sources */,
 				48568B981D3E160D005C97CC /* OVTLocationManager.swift in Sources */,
 			);

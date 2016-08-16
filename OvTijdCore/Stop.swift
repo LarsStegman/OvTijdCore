@@ -15,10 +15,15 @@ public class Stop: NSObject {
     public let timingPoint: TimingPoint
     public let location: CLLocation
 
-    public var passes = [Pass]()
+    public private(set) var passes = [Pass]()
+    public private(set) var messages = [Message]()
 
     public func add(pass: Pass) {
         passes.append(pass)
+    }
+
+    public func add(message: Message) {
+        messages.append(message)
     }
 
     init(timingPoint: TimingPoint, location: CLLocation) {

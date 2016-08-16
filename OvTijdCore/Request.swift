@@ -134,6 +134,12 @@ public class Request {
                 }
             }
 
+            for (_, message) in details["GeneralMessages"].dictionaryValue {
+                if let message = Message(from: message) {
+                    stop.add(message)
+                }
+            }
+
             stopsResult.append(stop)
         }
 
