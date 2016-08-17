@@ -44,6 +44,23 @@ public struct Message: Equatable {
         }
 
     }
+
+    public var shouldBeDisplayed: Bool {
+        let now = NSDate()
+        if planning.duration == .Remove && planning.startTime < now {
+            return false
+        }
+
+        if planning.startTime > now {
+            return false
+        }
+
+        if planning.endTime < now {
+            return false
+        }
+
+        return true
+    }
 }
 
 public func ==(lhs: Message, rhs: Message) -> Bool {
